@@ -1,24 +1,14 @@
 import React from 'react';
-import tw, { styled } from 'twin.macro';
-
-export const Box = styled.div`
-  ${tw`
-    w-full 
-    h-screen 
-    bg-black 
-    flex 
-    justify-center
-    items-center
-    text-white
-    text-2xl
-  `}
-`;
+import Sidebar from './layout/Sidebar/Sidebar';
+import { AppContainer } from './App.style';
+import Preview from './layout/Preview/Preview';
 
 const App = () => {
   return (
-    <Box>
-      Placeholder
-    </Box>
+    <AppContainer>
+      <Sidebar />
+      <Preview />
+    </AppContainer>
   );
 };
 

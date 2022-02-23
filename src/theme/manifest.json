@@ -1,0 +1,17 @@
+{
+  "name": "ThemeBeta.com",
+  "version": "1.0",
+  "description": "",
+  "manifest_version": 2,
+  "theme": {
+    "colors": {
+      "background_tab" : [86,195,183]
+    },
+    "tints": {
+      
+    },
+    "properties": {
+      
+    }
+  }
+}
