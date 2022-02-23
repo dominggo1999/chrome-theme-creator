@@ -10,6 +10,7 @@ export const StyledToolbar = styled.div`
     px-1
     w-1/5
     rounded-tr-sm
+    text-sm
   `}
 `;
 
