@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImagePicker } from 'react-file-picker';
+import ImagePicker from '../../lib/file-picker/ImagePicker';
 import { PanelWrapper } from '../../common/PanelWrapper';
 import {
   OptionItem,
@@ -15,12 +15,14 @@ import useImagesStore from '../../store/useImagesStore';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
+  const [imageName, setImageName] = useState('');
   const changePallete = usePaletteStore((state) => state.changePallete);
-
   const backgroundImage = useImagesStore((state) => state.images.frame);
   const updateValue = useImagesStore((state) => state.updateValue);
 
-  const handleUploadSuccess = (base64) => {
+  const handleUploadSuccess = (base64, fileObject) => {
+    const name = fileObject.name;
+    setImageName(name);
     setErrorMessage('');
     // Handle image here
     // Change theme background
@@ -38,6 +40,7 @@ const Basic = () => {
       const img = new Image();
       img.src = backgroundImage;
       const palette = ColorThief.prototype.getPalette(img, 8);
+      console.log(palette);
 
       changePallete(palette);
     }

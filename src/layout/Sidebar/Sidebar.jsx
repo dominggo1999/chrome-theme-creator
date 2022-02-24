@@ -28,28 +28,6 @@ const Sidebar = () => {
         <TabPanel>
           <Palette />
           <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
-          <ColorPicker />
         </TabPanel>
         <TabPanel>
           Panel 3
