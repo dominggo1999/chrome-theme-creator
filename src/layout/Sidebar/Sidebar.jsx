@@ -6,6 +6,7 @@ import {
   TabList,
   TabPanel,
 } from './Sidebar.style';
+import Basic from '../../panel/Basic/Basic';
 
 const Sidebar = () => {
   return (
@@ -19,7 +20,7 @@ const Sidebar = () => {
         </TabList>
 
         <TabPanel>
-          Panel 1
+          <Basic />
         </TabPanel>
         <TabPanel>
           Panel 2

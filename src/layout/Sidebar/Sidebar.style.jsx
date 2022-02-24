@@ -8,6 +8,7 @@ import {
 
 export const SidebarWrapper = styled.div`
   ${tw`
+    max-w-[300px]
     min-w-[300px]
     h-screen 
     bg-primary
@@ -72,7 +73,6 @@ export const TabPanel = styled(UnstyledTabPanel).attrs({ selectedClassName: 'sel
       flex 
       flex-col 
       h-full 
-      px-4 
     `}
   }
 `;
