@@ -3,6 +3,7 @@ import produce from 'immer';
 
 const initialImages = {
   frame: '',
+  frame_image_name: '',
   ntp_background: '',
   toolbar: '',
   inactive_tab_background: '',

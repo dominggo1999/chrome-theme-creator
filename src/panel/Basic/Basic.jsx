@@ -16,14 +16,14 @@ import useImagesStore from '../../store/useImagesStore';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
-  const [imageName, setImageName] = useState('');
   const changePallete = usePaletteStore((state) => state.changePallete);
-  const backgroundImage = useImagesStore((state) => state.images.frame);
   const updateValue = useImagesStore((state) => state.updateValue);
+  const backgroundImage = useImagesStore((state) => state.images.frame);
+  const imageName = useImagesStore((state) => state.images.frame_image_name);
 
   const handleUploadSuccess = (base64, fileObject) => {
     const name = fileObject.name;
-    setImageName(name);
+    updateValue('frame_image_name', name);
     setErrorMessage('');
     // Handle image here
     // Change theme background
@@ -33,7 +33,7 @@ const Basic = () => {
   const handleUploadFailed = (errMsg) => {
     if(errMsg.indexOf('Must upload a file of type') > -1) {
       setErrorMessage(' File type is not supported');
-      setImageName('');
+      updateValue('frame_image_name', '');
       updateValue('frame', '');
       changePallete([]);
     }
