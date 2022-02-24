@@ -9,6 +9,7 @@ import {
 import Basic from '../../panel/Basic/Basic';
 import Export from '../../panel/Export/Export';
 import Palette from '../../common/Palette/Palette';
+import ColorPicker from '../../common/ColorPicker/ColorPicker';
 
 const Sidebar = () => {
   return (
@@ -26,7 +27,7 @@ const Sidebar = () => {
         </TabPanel>
         <TabPanel>
           <Palette />
-          <Palette />
+          <ColorPicker />
         </TabPanel>
         <TabPanel>
           Panel 3

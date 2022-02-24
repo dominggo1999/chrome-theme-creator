@@ -23,6 +23,7 @@ export const Icon = styled.button`
 
 export const ColorPicker = styled.div`
   ${tw`
+    z-[90]
     absolute
     left-0 
     top-full

@@ -37,7 +37,7 @@ const Palette = ({ handleChange }) => {
   const handleOptionClick = (val) => {
     console.log(val);
 
-    // Set frame color here
+    // Set color here
   };
 
   const colors = mapArrayToRGB(colorPalette, true);
