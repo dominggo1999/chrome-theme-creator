@@ -24,8 +24,10 @@ export const PickerWrapper = styled.div`
     mt-1
     absolute 
     left-0 
-    top-full
+    z-[90]
   `}
+
+  ${({ reposition }) => (reposition ? tw`bottom-full` : tw`top-full`)}
 
   .react-colorful__last-control{
     ${tw`
