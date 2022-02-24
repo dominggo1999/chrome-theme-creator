@@ -16,6 +16,9 @@ const Basic = () => {
 
   const handleUploadSuccess = (base64) => {
     setErrorMessage('');
+
+    // Handle image here
+    // Change theme background
   };
 
   const handleUploadFailed = (errMsg) => {

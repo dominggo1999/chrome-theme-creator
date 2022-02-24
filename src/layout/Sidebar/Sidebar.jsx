@@ -7,6 +7,7 @@ import {
   TabPanel,
 } from './Sidebar.style';
 import Basic from '../../panel/Basic/Basic';
+import Export from '../../panel/Export/Export';
 
 const Sidebar = () => {
   return (
@@ -29,7 +30,7 @@ const Sidebar = () => {
           Panel 3
         </TabPanel>
         <TabPanel>
-          Panel 4
+          <Export />
         </TabPanel>
       </Tabs>
     </SidebarWrapper>
