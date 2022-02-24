@@ -10,6 +10,7 @@ import Basic from '../../panel/Basic/Basic';
 import Export from '../../panel/Export/Export';
 import Palette from '../../common/Palette/Palette';
 import ColorPicker from '../../common/ColorPicker/ColorPicker';
+import ImagePicker from '../../common/ImagePicker/ImagePicker';
 
 const Sidebar = () => {
   return (
@@ -28,6 +29,7 @@ const Sidebar = () => {
         <TabPanel>
           <Palette />
           <ColorPicker />
+          <ImagePicker />
         </TabPanel>
         <TabPanel>
           Panel 3

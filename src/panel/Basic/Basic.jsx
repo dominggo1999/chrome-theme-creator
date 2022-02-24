@@ -34,6 +34,8 @@ const Basic = () => {
     if(errMsg.indexOf('Must upload a file of type') > -1) {
       setErrorMessage(' File type is not supported');
       setImageName('');
+      updateValue('frame', '');
+      changePallete([]);
     }
   };
 
