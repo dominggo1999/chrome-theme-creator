@@ -8,9 +8,8 @@ import {
 } from './ColorPicker.style';
 import useOnClickOutside from '../../hooks/useClickOutside';
 
-const ColorPicker = ({ value, ...rest }) => {
+const ColorPicker = ({ onChange, color, ...rest }) => {
   const [open, setOpen] = useState(false);
-  const [testColor, setTestColor] = useState('#1E1E1E');
   const pickerRef = useRef();
   const wrapperRef = useRef();
   const [reposition, setReposition] = useState(false);
@@ -46,7 +45,7 @@ const ColorPicker = ({ value, ...rest }) => {
       <Icon
         onClick={openPicker}
         style={{
-          backgroundColor: testColor,
+          backgroundColor: color,
           pointerEvents: open ? 'none' : 'auto',
         }}
       />
@@ -59,13 +58,13 @@ const ColorPicker = ({ value, ...rest }) => {
           ref={pickerRef}
         >
           <HexColorPicker
-            color={testColor}
-            onChange={(e) => setTestColor(e)}
+            color={color}
+            onChange={onChange}
           />
           <ColorInputContainer>
             <HexColorInput
-              color={testColor}
-              onChange={(e) => setTestColor(e)}
+              color={color}
+              onChange={onChange}
             />
           </ColorInputContainer>
         </PickerWrapper>

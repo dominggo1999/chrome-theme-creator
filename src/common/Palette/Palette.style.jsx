@@ -3,9 +3,12 @@ import tw, { styled } from 'twin.macro';
 export const PaletteWrapper = styled.div`
   ${tw`
     relative
+    flex
+    items-center
+    justify-center
   `}
 
-  width : 20px;
+  width : 30px;
 `;
 
 export const Icon = styled.button`
@@ -17,6 +20,7 @@ export const Icon = styled.button`
   svg{
     ${tw`
       text-2xl
+      text-accent
     `}
   }
 `;
@@ -46,7 +50,7 @@ export const ColorOption = styled.div`
     `}
     transition : transform ease-in-out 200ms;
 
-    &:hover{
+    &:hover, &:active{
       transform : scale(1.2);
     }
 `;

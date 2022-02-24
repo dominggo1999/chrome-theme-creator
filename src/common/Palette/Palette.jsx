@@ -6,10 +6,9 @@ import {
 } from './Palette.style';
 import usePaletteStore from '../../store/usePaletteStore';
 import useImagesStore from '../../store/useImagesStore';
-import { mapArrayToRGB } from '../../util/colors';
 import useOnClickOutside from '../../hooks/useClickOutside';
 
-const Palette = ({ handleChange }) => {
+const Palette = ({ onChoose, a }) => {
   const colorPalette = usePaletteStore((state) => state.palette);
   const backgroundImage = useImagesStore(((state) => state.images.frame));
   const [disable, setDisable] = useState(true);
@@ -35,12 +34,8 @@ const Palette = ({ handleChange }) => {
   };
 
   const handleOptionClick = (val) => {
-    console.log(val);
-
-    // Set color here
+    onChoose(val);
   };
-
-  const colors = mapArrayToRGB(colorPalette, true);
 
   // Close color picker on click outside
   useOnClickOutside(colorPickerRef, closePalette);
@@ -61,11 +56,11 @@ const Palette = ({ handleChange }) => {
         colorPalette.length > 0 && open && (
           <ColorPicker ref={colorPickerRef}>
             {
-              colors.map((c) => {
+              colorPalette.map((c) => {
                 return (
                   <ColorOption
-                    onClick={() => handleOptionClick(c.value)}
-                    style={{ backgroundColor: c.cssColor }}
+                    onClick={() => handleOptionClick(c)}
+                    style={{ backgroundColor: c }}
                     key={uuid.generate()}
                   >
                   </ColorOption>

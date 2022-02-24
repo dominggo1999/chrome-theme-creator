@@ -14,7 +14,7 @@ export const Icon = styled.button`
     w-full
     bg-red-500
     rounded-full
-    border
+    border-2
     border-white
   `}
 `;

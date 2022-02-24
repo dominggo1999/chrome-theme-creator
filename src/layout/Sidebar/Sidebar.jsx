@@ -11,11 +11,12 @@ import Export from '../../panel/Export/Export';
 import Palette from '../../common/Palette/Palette';
 import ColorPicker from '../../common/ColorPicker/ColorPicker';
 import ImagePicker from '../../common/ImagePicker/ImagePicker';
+import Colors from '../../panel/Colors/Colors';
 
 const Sidebar = () => {
   return (
     <SidebarWrapper>
-      <Tabs defaultIndex={1}>
+      <Tabs defaultIndex={2}>
         <TabList>
           <Tab>Basic</Tab>
           <Tab>Images</Tab>
@@ -32,7 +33,7 @@ const Sidebar = () => {
           <ImagePicker />
         </TabPanel>
         <TabPanel>
-          Panel 3
+          <Colors />
         </TabPanel>
         <TabPanel>
           <Export />

@@ -13,13 +13,14 @@ import Button from '../../common/Button/Button';
 import ColorThief from '../../lib/color-thief/color-thief';
 import usePaletteStore from '../../store/usePaletteStore';
 import useImagesStore from '../../store/useImagesStore';
+import { mapArrayToHex } from '../../util/colors';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
   const changePallete = usePaletteStore((state) => state.changePallete);
   const updateValue = useImagesStore((state) => state.updateValue);
-  const backgroundImage = useImagesStore((state) => state.images.frame);
-  const imageName = useImagesStore((state) => state.images.frame_image_name);
+  const backgroundImage = useImagesStore((state) => state.images.frame.value);
+  const imageName = useImagesStore((state) => state.images.frame_image_name.value);
 
   const handleUploadSuccess = (base64, fileObject) => {
     const name = fileObject.name;
@@ -45,7 +46,8 @@ const Basic = () => {
       img.src = backgroundImage;
       img.onload = () => {
         const palette = ColorThief.prototype.getPalette(img, 8);
-        changePallete(palette);
+        const hexColors = mapArrayToHex(palette);
+        changePallete(hexColors);
       };
     }
   };
