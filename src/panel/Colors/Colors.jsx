@@ -18,6 +18,7 @@ const Colors = () => {
                 key={`colors${item}`}
                 propertyName={item}
                 colorOnly
+                colorsTab
               />
             );
           })

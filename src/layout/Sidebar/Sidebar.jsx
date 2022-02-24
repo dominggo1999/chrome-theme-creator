@@ -8,15 +8,13 @@ import {
 } from './Sidebar.style';
 import Basic from '../../panel/Basic/Basic';
 import Export from '../../panel/Export/Export';
-import Palette from '../../common/Palette/Palette';
-import ColorPicker from '../../common/ColorPicker/ColorPicker';
-import ImagePicker from '../../common/ImagePicker/ImagePicker';
 import Colors from '../../panel/Colors/Colors';
+import Images from '../../panel/Images/Images';
 
 const Sidebar = () => {
   return (
     <SidebarWrapper>
-      <Tabs defaultIndex={2}>
+      <Tabs defaultIndex={1}>
         <TabList>
           <Tab>Basic</Tab>
           <Tab>Images</Tab>
@@ -28,9 +26,7 @@ const Sidebar = () => {
           <Basic />
         </TabPanel>
         <TabPanel>
-          <Palette />
-          <ColorPicker />
-          <ImagePicker />
+          <Images />
         </TabPanel>
         <TabPanel>
           <Colors />

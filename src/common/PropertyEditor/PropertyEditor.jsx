@@ -1,16 +1,17 @@
 import React from 'react';
-import ImagePicker from '../../lib/file-picker/ImagePicker';
 import Palette from '../Palette/Palette';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import useColorsStore from '../../store/useColorsStore';
 import useImagesStore from '../../store/useImagesStore';
 import { PropertyEditorWrapper, Label, Controllers } from './PropertyEditor.style';
+import ImagePicker from '../ImagePicker/ImagePicker';
 
 const PropertyEditor = ({
   propertyName,
-  colorOnly,
+  colorOnly = false,
+  colorsTab,
 }) => {
-  const color = colorOnly
+  const color = colorsTab
     ? useColorsStore(((state) => state.colors[propertyName].value))
     : useImagesStore(((state) => state.images[propertyName].color));
 
@@ -39,6 +40,12 @@ const PropertyEditor = ({
         {propertyName}
       </Label>
       <Controllers>
+        {
+          !colorOnly && (
+            <ImagePicker />
+          )
+        }
+
         <ColorPicker
           onChange={onColorChange}
           color={color}

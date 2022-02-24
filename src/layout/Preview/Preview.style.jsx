@@ -7,7 +7,7 @@ export const PreviewWrapper = styled.div`
     h-full
   `}
 
-  width : calc(100% - 300px - 8px);
+  width : calc(100% - 400px - 8px);
 `;
 
 export const ChromePreviewWrapper = styled.div`

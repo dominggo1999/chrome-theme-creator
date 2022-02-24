@@ -1,7 +1,7 @@
 import create from 'zustand';
 import produce from 'immer';
 
-const initialImages = {
+export const initialImages = {
   frame: {
     name: 'frame',
     value: '',
@@ -25,14 +25,17 @@ const initialImages = {
   inactive_tab_background: {
     name: 'inactive_tab_background',
     value: '',
+    colorOnly: true,
   },
   frame_overlay: {
     name: 'frame_overlay',
     value: '',
+    colorOnly: true,
   },
   ntp_attribution: {
     name: 'ntp_attribution',
     value: '',
+    colorOnly: true,
   },
 };
 
