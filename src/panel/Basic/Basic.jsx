@@ -43,10 +43,10 @@ const Basic = () => {
     if(backgroundImage) {
       const img = new Image();
       img.src = backgroundImage;
-      const palette = ColorThief.prototype.getPalette(img, 8);
-      console.log(palette);
-
-      changePallete(palette);
+      img.onload = () => {
+        const palette = ColorThief.prototype.getPalette(img, 8);
+        changePallete(palette);
+      };
     }
   };
 
