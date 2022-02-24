@@ -5,6 +5,7 @@ import useColorsStore from '../../store/useColorsStore';
 import useImagesStore from '../../store/useImagesStore';
 import { PropertyEditorWrapper, Label, Controllers } from './PropertyEditor.style';
 import ImagePicker from '../ImagePicker/ImagePicker';
+import { propertyNameToLabel } from '../../util/formatting';
 
 const PropertyEditor = ({
   propertyName,
@@ -34,10 +35,12 @@ const PropertyEditor = ({
     updateImageValue(propertyName, newImage);
   };
 
+  const label = propertyNameToLabel(propertyName);
+
   return (
     <PropertyEditorWrapper>
       <Label>
-        {propertyName}
+        {label}
       </Label>
       <Controllers>
         {
