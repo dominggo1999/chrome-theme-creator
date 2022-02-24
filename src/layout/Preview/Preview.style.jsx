@@ -4,6 +4,7 @@ export const PreviewWrapper = styled.div`
   ${tw`
     px-2
     py-2
+    h-full
   `}
 
   width : calc(100% - 300px - 8px);

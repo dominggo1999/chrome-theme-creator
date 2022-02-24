@@ -4,7 +4,7 @@ export const TablistWrapper = styled.div`
   ${tw`
     flex
     pt-2
-    pl-1
+    px-2
     bg-indigo-500
     relative
   `}
