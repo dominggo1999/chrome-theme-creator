@@ -37,10 +37,24 @@ export const OptionDescription = styled.p`
   }
 `;
 
-export const ErrorMessage = styled.div`
+export const UploadResult = styled.div`
   ${tw`
     mt-2
     text-danger
     text-sm
+  `}
+`;
+
+export const ErrorMessage = styled(UploadResult)`
+  ${tw`
+    text-danger
+  `}
+`;
+
+export const FileName = styled(UploadResult)`
+  ${tw`
+    text-accent
+    truncate
+    max-w-[90%]
   `}
 `;

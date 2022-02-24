@@ -7,6 +7,7 @@ import {
   OptionTitle,
   OptionDescription,
   ErrorMessage,
+  FileName,
 } from './Basic.style';
 import Button from '../../common/Button/Button';
 import ColorThief from '../../lib/color-thief/color-thief';
@@ -32,6 +33,7 @@ const Basic = () => {
   const handleUploadFailed = (errMsg) => {
     if(errMsg.indexOf('Must upload a file of type') > -1) {
       setErrorMessage(' File type is not supported');
+      setImageName('');
     }
   };
 
@@ -65,8 +67,10 @@ const Basic = () => {
             <Button>Select image</Button>
           </ImagePicker>
           {
-            errorMessage
-            && <ErrorMessage>*{errorMessage}</ErrorMessage>
+            errorMessage && <ErrorMessage>*{errorMessage}</ErrorMessage>
+          }
+          {
+            !errorMessage && backgroundImage && imageName && <FileName>{imageName}</FileName>
           }
 
         </OptionItem>
