@@ -3,7 +3,7 @@ import 'twin.macro';
 import colorThief from '../lib/color-thief/color-thief';
 
 const ColorExtractor = () => {
-  const [pallete, setPallete] = useState([]);
+  const [palette, setPallete] = useState([]);
   const [src, setSrc] = useState('');
 
   const handleChange = (e) => {
@@ -28,11 +28,11 @@ const ColorExtractor = () => {
     const img = new Image();
     img.src = src;
 
-    const pallete = colorThief.prototype.getPalette(img, 8);
-    setPallete(pallete);
+    const palette = colorThief.prototype.getPalette(img, 8);
+    setPallete(palette);
   };
 
-  console.log(pallete);
+  console.log(palette);
 
   return (
     <div>
@@ -54,7 +54,7 @@ const ColorExtractor = () => {
       <br />
       <div tw="flex gap-x-2">
         {
-          pallete?.length > 0 && pallete.map((i) => {
+          palette?.length > 0 && palette.map((i) => {
             const c = createColor(i);
 
             return (

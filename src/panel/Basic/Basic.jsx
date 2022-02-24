@@ -9,21 +9,37 @@ import {
   ErrorMessage,
 } from './Basic.style';
 import Button from '../../common/Button/Button';
+import ColorThief from '../../lib/color-thief/color-thief';
+import usePaletteStore from '../../store/usePaletteStore';
+import useImagesStore from '../../store/useImagesStore';
 
 const Basic = () => {
-  const [backgroundImage, setBackgroundImage] = useState('');
   const [errorMessage, setErrorMessage] = useState();
+  const changePallete = usePaletteStore((state) => state.changePallete);
+
+  const backgroundImage = useImagesStore((state) => state.images.frame);
+  const updateValue = useImagesStore((state) => state.updateValue);
 
   const handleUploadSuccess = (base64) => {
     setErrorMessage('');
-
     // Handle image here
     // Change theme background
+    updateValue('frame', base64);
   };
 
   const handleUploadFailed = (errMsg) => {
-    if(errorMessage.indexOf('Must upload a file of type') > -1) {
+    if(errMsg.indexOf('Must upload a file of type') > -1) {
       setErrorMessage(' File type is not supported');
+    }
+  };
+
+  const extractColors = () => {
+    if(backgroundImage) {
+      const img = new Image();
+      img.src = backgroundImage;
+      const palette = ColorThief.prototype.getPalette(img, 8);
+
+      changePallete(palette);
     }
   };
 
@@ -57,7 +73,7 @@ const Basic = () => {
           <OptionDescription>
             Generate a color palette for your theme that is generated from the background image
           </OptionDescription>
-          <Button>Generate Color</Button>
+          <Button onClick={extractColors}>Generate Color</Button>
         </OptionItem>
         <OptionItem>
 

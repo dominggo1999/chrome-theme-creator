@@ -20,3 +20,11 @@ const initialHoverState = {
   color_title_bar: false,
   color_navigation: false,
 };
+
+const usePaletteStore = create((set) => {
+  return {
+    hoverState: initialHoverState,
+  };
+});
+
+export default usePaletteStore;

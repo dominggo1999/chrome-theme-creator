@@ -15,8 +15,10 @@ const initialColors = {
   navigation: '#707070',
 };
 
-export const useColorsStore = create((set) => {
+const useColorsStore = create((set) => {
   return {
     colors: initialColors,
   };
 });
+
+export default useColorsStore;

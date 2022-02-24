@@ -1,4 +1,5 @@
 import create from 'zustand';
+import produce from 'immer';
 
 const initialImages = {
   frame: '',
@@ -9,8 +10,17 @@ const initialImages = {
   ntp_attribution: '',
 };
 
-export const useColorsStore = create((set) => {
+const updateValue = (set, key, newValue) => {
+  return set(produce((draft) => {
+    draft.images[key] = newValue;
+  }));
+};
+
+const useImagesStore = create((set) => {
   return {
-    colors: initialImages,
+    images: initialImages,
+    updateValue: (key, newValue) => updateValue(set, key, newValue),
   };
 });
+
+export default useImagesStore;

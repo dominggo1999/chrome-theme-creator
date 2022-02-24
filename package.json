@@ -22,6 +22,7 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.0.2",
     "react-tabs": "^3.2.3",
+    "short-uuid": "^4.2.0",
     "styled-components": "^5.3.1",
     "use-file-picker": "^1.4.1",
     "zustand": "^3.7.0"
