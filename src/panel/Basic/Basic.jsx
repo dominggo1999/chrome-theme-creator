@@ -19,7 +19,9 @@ const Basic = () => {
   };
 
   const handleUploadFailed = (errMsg) => {
-    setErrorMessage(errMsg);
+    if(errorMessage.indexOf('Must upload a file of type') > -1) {
+      setErrorMessage(' File type is not supported');
+    }
   };
 
   return (
@@ -28,7 +30,7 @@ const Basic = () => {
         <OptionItem>
           <OptionTitle>1. Select an image</OptionTitle>
           <OptionDescription>
-            Upload an image as a background. Only <span>*.jpg</span>, <span>*.jpeg</span>, and <span>*.png</span> images will be accepted
+            Upload an image as a background. Only <span>*.jpg</span>, <span>*.jpeg</span>, <span>*.png</span> and <span>*.gif</span> images will be accepted
           </OptionDescription>
           <ImagePicker
             dims={{
@@ -36,7 +38,7 @@ const Basic = () => {
             }}
             onChange={handleUploadSuccess}
             onError={handleUploadFailed}
-            extensions={['jpg', 'jpeg', 'png']}
+            extensions={['jpg', 'jpeg', 'png', 'gif']}
           >
             <Button>Select image</Button>
           </ImagePicker>
