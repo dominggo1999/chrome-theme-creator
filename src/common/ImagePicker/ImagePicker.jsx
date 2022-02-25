@@ -8,24 +8,29 @@ import {
   ErrorResult,
 } from './ImagePicker.style';
 
-const ImagePicker = () => {
+const ImagePicker = ({
+  image,
+  resetImage,
+  onImageError,
+  onImageChange,
+}) => {
   // Image value is from props
-  const [image, setImage] = useState();
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
 
   const handleUploadSuccess = (base64, fileObject) => {
     setSuccess(true);
-    setImage(base64);
+    onImageChange(base64);
   };
 
   const handleUploadFailed = (errMsg) => {
+    onImageError();
     setSuccess(false);
     setErrorMessage(errMsg);
   };
 
   const reset = () => {
-    setImage('');
+    resetImage();
     setErrorMessage('');
     setSuccess(false);
   };

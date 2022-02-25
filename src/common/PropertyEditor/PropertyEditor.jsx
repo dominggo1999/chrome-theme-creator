@@ -16,23 +16,28 @@ const PropertyEditor = ({
     ? useColorsStore(((state) => state.colors[propertyName].value))
     : useImagesStore(((state) => state.images[propertyName].color));
 
-  const image = colorOnly
+  const image = colorsTab
     ? null
-    : useImagesStore(((state) => state.images[propertyName].value));
+    : useImagesStore(((state) => state.images[propertyName].image));
 
   const updateColorValue = useColorsStore((state) => state.updateValue);
-  const updateImageValue = useImagesStore((state) => state.updateValue);
+  const updateImageValue = useImagesStore((state) => state.updateImagesValue);
+  const updateImageColor = useImagesStore((state) => state.updateImagesColor);
 
   const onColorChange = (newColor) => {
-    updateColorValue(propertyName, newColor);
-  };
-
-  const handlePaletteChoose = (newColor) => {
-    updateColorValue(propertyName, newColor);
+    colorsTab ? updateColorValue(propertyName, newColor) : updateImageColor(propertyName, newColor);
   };
 
   const onImageChange = (newImage) => {
     updateImageValue(propertyName, newImage);
+  };
+
+  const resetImage = () => {
+    updateImageValue(propertyName, '');
+  };
+
+  const onImageError = () => {
+    resetImage();
   };
 
   const label = propertyNameToLabel(propertyName);
@@ -45,7 +50,12 @@ const PropertyEditor = ({
       <Controllers>
         {
           !colorOnly && (
-            <ImagePicker />
+            <ImagePicker
+              image={image}
+              resetImage={resetImage}
+              onImageChange={onImageChange}
+              onImageError={onImageError}
+            />
           )
         }
 
@@ -54,7 +64,7 @@ const PropertyEditor = ({
           color={color}
         />
         <Palette
-          onChoose={handlePaletteChoose}
+          onChoose={onColorChange}
           a="1"
         />
       </Controllers>

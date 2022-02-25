@@ -13,29 +13,33 @@ import Button from '../../common/Button/Button';
 import ColorThief from '../../lib/color-thief/color-thief';
 import usePaletteStore from '../../store/usePaletteStore';
 import useImagesStore from '../../store/useImagesStore';
+import useBackgroundNameStore from '../../store/useBackgroundNameStore';
 import { mapArrayToHex } from '../../util/colors';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
   const changePallete = usePaletteStore((state) => state.changePallete);
-  const updateValue = useImagesStore((state) => state.updateValue);
-  const backgroundImage = useImagesStore((state) => state.images.frame.value);
-  const imageName = useImagesStore((state) => state.images.frame_image_name.value);
+
+  const updateBackground = useImagesStore((state) => state.updateImagesValue);
+  const backgroundImage = useImagesStore((state) => state.images.frame.image);
+
+  const imageName = useBackgroundNameStore((state) => state.name);
+  const changeFileName = useBackgroundNameStore((state) => state.changeFileName);
 
   const handleUploadSuccess = (base64, fileObject) => {
     const name = fileObject.name;
-    updateValue('frame_image_name', name);
+    changeFileName(name);
     setErrorMessage('');
     // Handle image here
     // Change theme background
-    updateValue('frame', base64);
+    updateBackground('frame', base64);
   };
 
   const handleUploadFailed = (errMsg) => {
     if(errMsg.indexOf('Must upload a file of type') > -1) {
       setErrorMessage(' File type is not supported');
-      updateValue('frame_image_name', '');
-      updateValue('frame', '');
+      changeFileName('');
+      updateBackground('frame', '');
       changePallete([]);
     }
   };

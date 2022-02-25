@@ -10,7 +10,6 @@ const colorOnlyProperties = [];
 for (const key in initialImages) {
   if (Object.hasOwnProperty.call(initialImages, key)) {
     const item = initialImages[key];
-    console.log(item);
     if(item.colorOnly) {
       colorOnlyProperties.push(item.name);
     }

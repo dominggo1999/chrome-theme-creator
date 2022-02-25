@@ -4,51 +4,57 @@ import produce from 'immer';
 export const initialImages = {
   frame: {
     name: 'frame',
-    value: '',
-    color: '#ffffff',
-  },
-  frame_image_name: {
-    name: 'frame_image_name',
-    value: '',
+    image: '',
     color: '#ffffff',
   },
   ntp_background: {
     name: 'ntp_background',
-    value: '',
+    image: '',
     color: '#ffffff',
   },
   toolbar: {
     name: 'toolbar',
-    value: '',
+    image: '',
     color: '#ffffff',
   },
   inactive_tab_background: {
     name: 'inactive_tab_background',
-    value: '',
     colorOnly: true,
+    color: '#ffffff',
+
   },
   frame_overlay: {
     name: 'frame_overlay',
-    value: '',
     colorOnly: true,
+    color: '#ffffff',
   },
   ntp_attribution: {
     name: 'ntp_attribution',
-    value: '',
     colorOnly: true,
+    color: '#ffffff',
   },
 };
 
-const updateValue = (set, key, newValue) => {
+const updateImagesValue = (set, key, newValue) => {
   return set(produce((draft) => {
-    draft.images[key].value = newValue;
+    // Only update if there is an image
+    if(!draft.images[key].colorOnly) {
+      draft.images[key].image = newValue;
+    }
+  }));
+};
+
+const updateImagesColor = (set, key, newValue) => {
+  return set(produce((draft) => {
+    draft.images[key].color = newValue;
   }));
 };
 
 const useImagesStore = create((set) => {
   return {
     images: initialImages,
-    updateValue: (key, newValue) => updateValue(set, key, newValue),
+    updateImagesValue: (key, newValue) => updateImagesValue(set, key, newValue),
+    updateImagesColor: (key, newValue) => updateImagesColor(set, key, newValue),
   };
 });
 
