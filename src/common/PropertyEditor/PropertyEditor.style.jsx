@@ -37,7 +37,7 @@ export const ControllerRight = styled.div`
     justify-end
   `}
 
-  div:nth-child(2){
+  & > div:nth-child(2){
     margin-left: ${({ colorsTab }) => (!colorsTab ? 'calc((100% - 42px) / 2)' : '0.75rem')};
   }
 

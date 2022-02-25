@@ -21,7 +21,7 @@ const Basic = () => {
   const changePallete = usePaletteStore((state) => state.changePallete);
 
   const updateBackground = useImagesStore((state) => state.updateImagesValue);
-  const backgroundImage = useImagesStore((state) => state.images.frame.image);
+  const backgroundImage = useImagesStore((state) => state.images.ntp_background.image);
 
   const imageName = useBackgroundNameStore((state) => state.name);
   const changeFileName = useBackgroundNameStore((state) => state.changeFileName);

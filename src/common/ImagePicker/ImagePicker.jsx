@@ -17,12 +17,12 @@ const ImagePicker = ({
   const [errorMessage, setErrorMessage] = useState();
 
   const handleUploadSuccess = (base64, fileObject) => {
-    onImageChange(base64);
+    onImageChange(base64, fileObject);
     setErrorMessage('');
   };
 
   const handleUploadFailed = (errMsg) => {
-    onImageError();
+    onImageError(errorMessage);
     setErrorMessage(errMsg);
   };
 
