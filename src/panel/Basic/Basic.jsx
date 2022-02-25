@@ -17,6 +17,7 @@ import useImagesStore from '../../store/useImagesStore';
 import useBackgroundNameStore from '../../store/useBackgroundNameStore';
 import { mapArrayToHex } from '../../util/colors';
 import useColorsStore from '../../store/useColorsStore';
+import ExportButton from '../../common/ExportButton/ExportButton';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
@@ -62,6 +63,7 @@ const Basic = () => {
         const primaryColor = hexColors[0];
         const secondaryColor = hexColors[1];
 
+        // TODO : refactor this into a loop
         updateImageColor('frame', primaryColor);
         updateImageColor('ntp_background', primaryColor);
         updateImageColor('toolbar', secondaryColor);
@@ -117,7 +119,7 @@ const Basic = () => {
           <OptionDescription>
             Export and download your theme as a <span>.zip </span>  file. Check out how to install <a href="#">here</a>
           </OptionDescription>
-          <Button>Export and Download</Button>
+          <ExportButton>Export and Download</ExportButton>
         </OptionItem>
       </Options>
     </PanelWrapper>

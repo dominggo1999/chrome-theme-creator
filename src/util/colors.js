@@ -26,3 +26,10 @@ export const mapArrayToHex = (arr) => {
     return `#${rgbHex(rgb)}`;
   });
 };
+
+export const hexToRgbArray = (hex) => {
+  const res = hex.match(/[a-f0-9]{2}/gi);
+  return res && res.length === 3
+    ? res.map((v) => { return parseInt(v, 16); })
+    : null;
+};

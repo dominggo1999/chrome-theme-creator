@@ -1,7 +1,7 @@
 import create from 'zustand';
 import produce from 'immer';
 
-const initialColors = {
+export const initialColors = {
   active_tab_text: {
     name: 'active_tab_text',
     value: '#3C4043',
@@ -34,10 +34,11 @@ const updateValue = (set, key, newValue) => {
   }));
 };
 
-const useColorsStore = create((set) => {
+const useColorsStore = create((set, get) => {
   return {
     colors: initialColors,
     updateValue: (key, newValue) => updateValue(set, key, newValue),
+    getColors: () => get().colors,
   };
 });
 

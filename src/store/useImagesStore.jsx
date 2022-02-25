@@ -49,11 +49,12 @@ const updateImagesColor = (set, key, newValue) => {
   }));
 };
 
-const useImagesStore = create((set) => {
+const useImagesStore = create((set, get) => {
   return {
     images: initialImages,
     updateImagesValue: (key, newValue) => updateImagesValue(set, key, newValue),
     updateImagesColor: (key, newValue) => updateImagesColor(set, key, newValue),
+    getImages: () => get().images,
   };
 });
 
