@@ -14,7 +14,7 @@ import Images from '../../panel/Images/Images';
 const Sidebar = () => {
   return (
     <SidebarWrapper>
-      <Tabs defaultIndex={1}>
+      <Tabs defaultIndex={0}>
         <TabList>
           <Tab>Basic</Tab>
           <Tab>Images</Tab>

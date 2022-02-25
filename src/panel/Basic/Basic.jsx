@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import fontColorContrast from 'font-color-contrast';
 import ImagePicker from '../../lib/file-picker/ImagePicker';
 import { PanelWrapper } from '../../common/PanelWrapper';
 import {
@@ -15,6 +16,7 @@ import usePaletteStore from '../../store/usePaletteStore';
 import useImagesStore from '../../store/useImagesStore';
 import useBackgroundNameStore from '../../store/useBackgroundNameStore';
 import { mapArrayToHex } from '../../util/colors';
+import useColorsStore from '../../store/useColorsStore';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
@@ -25,6 +27,9 @@ const Basic = () => {
 
   const imageName = useBackgroundNameStore((state) => state.name);
   const changeFileName = useBackgroundNameStore((state) => state.changeFileName);
+
+  const updateColorValue = useColorsStore((state) => state.updateValue);
+  const updateImageColor = useImagesStore((state) => state.updateImagesColor);
 
   const handleUploadSuccess = (base64, fileObject) => {
     const name = fileObject.name;
@@ -52,6 +57,22 @@ const Basic = () => {
         const palette = ColorThief.prototype.getPalette(img, 8);
         const hexColors = mapArrayToHex(palette);
         changePallete(hexColors);
+
+        // Applying palette
+        const primaryColor = hexColors[0];
+        const secondaryColor = hexColors[1];
+
+        updateImageColor('frame', primaryColor);
+        updateImageColor('ntp_background', primaryColor);
+        updateImageColor('toolbar', secondaryColor);
+        updateImageColor('inactive_tab', primaryColor);
+
+        updateColorValue('active_tab_text', fontColorContrast(secondaryColor));
+        updateColorValue('inactive_tab_text', fontColorContrast(primaryColor));
+        updateColorValue('bookmark_text', fontColorContrast(secondaryColor));
+        updateColorValue('ntp_text', fontColorContrast(primaryColor));
+        updateColorValue('title_bar', primaryColor);
+        updateColorValue('navigation', primaryColor);
       };
     }
   };
