@@ -18,12 +18,12 @@ export const ImagePickerWrapper = styled.div`
 
 export const OpenPickerButton = styled.button`
   ${tw`
-    w-[120px] 
+    w-[110px] 
     bg-accent
     text-primary
     rounded-lg
     text-sm
-    px-3
+    px-2
     py-1
     relative
     overflow-hidden

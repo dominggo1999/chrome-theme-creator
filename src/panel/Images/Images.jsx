@@ -6,12 +6,12 @@ import { ImagesWrapper } from './Images.style';
 import useImagesStore, { initialImages } from '../../store/useImagesStore';
 import PropertyEditor from '../../common/PropertyEditor/PropertyEditor';
 
-const colorOnlyProperties = [];
+const imageOnlyProperties = [];
 for (const key in initialImages) {
   if (Object.hasOwnProperty.call(initialImages, key)) {
     const item = initialImages[key];
-    if(item.colorOnly) {
-      colorOnlyProperties.push(item.name);
+    if(item.imageOnly) {
+      imageOnlyProperties.push(item.name);
     }
   }
 }
@@ -28,7 +28,7 @@ const Images = () => {
               <PropertyEditor
                 key={`colors${item}`}
                 propertyName={item}
-                colorOnly={colorOnlyProperties.includes(item)}
+                imageOnly={imageOnlyProperties.includes(item)}
               />
             );
           })

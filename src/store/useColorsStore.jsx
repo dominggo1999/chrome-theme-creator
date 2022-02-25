@@ -14,8 +14,8 @@ const initialColors = {
     name: 'toolbar',
     value: '#FFFFFF',
   },
-  inactive_tab_background: {
-    name: 'inactive_tab_background',
+  inactive_tab: {
+    name: 'inactive_tab',
     value: '#DEE1E6',
   },
   bottom_link: {

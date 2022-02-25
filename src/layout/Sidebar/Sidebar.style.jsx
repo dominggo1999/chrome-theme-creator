@@ -8,8 +8,8 @@ import {
 
 export const SidebarWrapper = styled.div`
   ${tw`
-    max-w-[400px]
-    min-w-[400px]
+    max-w-[370px]
+    min-w-[370px]
     h-screen 
     bg-primary
     text-white

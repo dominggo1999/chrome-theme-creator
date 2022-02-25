@@ -8,13 +8,12 @@ export const PaletteWrapper = styled.div`
     justify-center
   `}
 
-  width : 30px;
+  width : 20px;
 `;
 
 export const Icon = styled.button`
   ${tw`
     inline-flex
-    w-full
   `}
 
   svg{

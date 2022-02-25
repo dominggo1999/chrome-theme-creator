@@ -17,36 +17,35 @@ export const initialImages = {
     image: '',
     color: '#ffffff',
   },
-  inactive_tab_background: {
-    name: 'inactive_tab_background',
-    colorOnly: true,
+  inactive_tab: {
+    name: 'inactive_tab',
     color: '#ffffff',
 
   },
   frame_overlay: {
     name: 'frame_overlay',
-    colorOnly: true,
     color: '#ffffff',
+    imageOnly: true,
   },
   ntp_attribution: {
     name: 'ntp_attribution',
-    colorOnly: true,
     color: '#ffffff',
+    imageOnly: true,
   },
 };
 
 const updateImagesValue = (set, key, newValue) => {
   return set(produce((draft) => {
-    // Only update if there is an image
-    if(!draft.images[key].colorOnly) {
-      draft.images[key].image = newValue;
-    }
+    draft.images[key].image = newValue;
   }));
 };
 
 const updateImagesColor = (set, key, newValue) => {
   return set(produce((draft) => {
-    draft.images[key].color = newValue;
+    // Only update if there is a color
+    if(draft.images[key].color) {
+      draft.images[key].color = newValue;
+    }
   }));
 };
 

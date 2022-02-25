@@ -14,25 +14,21 @@ const ImagePicker = ({
   onImageError,
   onImageChange,
 }) => {
-  // Image value is from props
-  const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
 
   const handleUploadSuccess = (base64, fileObject) => {
-    setSuccess(true);
     onImageChange(base64);
+    setErrorMessage('');
   };
 
   const handleUploadFailed = (errMsg) => {
     onImageError();
-    setSuccess(false);
     setErrorMessage(errMsg);
   };
 
   const reset = () => {
     resetImage();
     setErrorMessage('');
-    setSuccess(false);
   };
 
   return (
@@ -40,7 +36,7 @@ const ImagePicker = ({
       <ImagePickerWrapper>
 
         {
-          !image && !success && !errorMessage
+          !image && !errorMessage
           && (
           <Picker
             dims={{
@@ -56,7 +52,7 @@ const ImagePicker = ({
         }
 
         {
-          success && !errorMessage
+          image
           && (
             <div>
               <SuccessResult>
@@ -74,7 +70,7 @@ const ImagePicker = ({
         }
 
         {
-          errorMessage && !success
+          errorMessage
           && (
             <div>
               <ErrorResult>

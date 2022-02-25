@@ -3,13 +3,19 @@ import Palette from '../Palette/Palette';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import useColorsStore from '../../store/useColorsStore';
 import useImagesStore from '../../store/useImagesStore';
-import { PropertyEditorWrapper, Label, Controllers } from './PropertyEditor.style';
+import {
+  PropertyEditorWrapper,
+  Label,
+  Controllers,
+  ControllerLeft,
+  ControllerRight,
+} from './PropertyEditor.style';
 import ImagePicker from '../ImagePicker/ImagePicker';
 import { propertyNameToLabel } from '../../util/formatting';
 
 const PropertyEditor = ({
   propertyName,
-  colorOnly = false,
+  imageOnly,
   colorsTab,
 }) => {
   const color = colorsTab
@@ -48,25 +54,38 @@ const PropertyEditor = ({
         {label}
       </Label>
       <Controllers>
-        {
-          !colorOnly && (
+        <ControllerLeft>
+
+          {
+            !colorsTab
+            && (
             <ImagePicker
               image={image}
               resetImage={resetImage}
               onImageChange={onImageChange}
               onImageError={onImageError}
             />
-          )
-        }
+            )
+          }
+        </ControllerLeft>
 
-        <ColorPicker
-          onChange={onColorChange}
-          color={color}
-        />
-        <Palette
-          onChoose={onColorChange}
-          a="1"
-        />
+        <ControllerRight colorsTab={colorsTab}>
+
+          {
+            !imageOnly && (
+              <>
+                <ColorPicker
+                  onChange={onColorChange}
+                  color={color}
+                />
+                <Palette
+                  onChoose={onColorChange}
+                  a="1"
+                />
+              </>
+            )
+          }
+        </ControllerRight>
       </Controllers>
     </PropertyEditorWrapper>
   );
