@@ -111,6 +111,7 @@ export const NtpItem = styled.div`
       bg-[#A9ABB7]
     `}
     aspect-ratio : 1;
+    background-color : #a9abb739; 
   }
 
   span svg{

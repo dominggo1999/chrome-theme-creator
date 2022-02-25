@@ -2,26 +2,6 @@ import create from 'zustand';
 import produce from 'immer';
 
 const initialColors = {
-  frame: {
-    name: 'frame',
-    value: '#DEE1E6',
-  },
-  ntp_background: {
-    name: 'ntp_background',
-    value: '#FFFFFF',
-  },
-  toolbar: {
-    name: 'toolbar',
-    value: '#FFFFFF',
-  },
-  inactive_tab: {
-    name: 'inactive_tab',
-    value: '#DEE1E6',
-  },
-  bottom_link: {
-    name: 'bottom_link',
-    value: '#FFFFFF',
-  },
   active_tab_text: {
     name: 'active_tab_text',
     value: '#3C4043',
@@ -40,7 +20,7 @@ const initialColors = {
   },
   title_bar: {
     name: 'title_bar',
-    value: '#000000',
+    value: '#DEE1E6',
   },
   navigation: {
     name: 'navigation',

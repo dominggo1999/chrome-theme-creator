@@ -35,13 +35,13 @@ export const Omnibox = styled.div`
     w-full
     h-full
     relative
-    bg-[#1E1E1E]
+    bg-[#E1E1E2]
     rounded-full
     px-3
     flex
     items-center
     justify-between
-    text-white
+    text-black
   `}
 
   span{

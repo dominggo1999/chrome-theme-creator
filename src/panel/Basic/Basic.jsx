@@ -32,14 +32,14 @@ const Basic = () => {
     setErrorMessage('');
     // Handle image here
     // Change theme background
-    updateBackground('frame', base64);
+    updateBackground('ntp_background', base64);
   };
 
   const handleUploadFailed = (errMsg) => {
     if(errMsg.indexOf('Must upload a file of type') > -1) {
       setErrorMessage(' File type is not supported');
       changeFileName('');
-      updateBackground('frame', '');
+      updateBackground('ntp_background', '');
       changePallete([]);
     }
   };

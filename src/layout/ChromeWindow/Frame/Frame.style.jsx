@@ -7,9 +7,7 @@ export const StyledFrame = styled.div`
     overflow-hidden 
     flex
     flex-col
-    bg-[#6366F1]
-    px-1
-    pb-1
+    p-1
     select-none
   `}
 

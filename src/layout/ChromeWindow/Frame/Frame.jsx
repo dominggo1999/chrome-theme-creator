@@ -5,10 +5,17 @@ import Tablist from '../Tablist/Tablist';
 import SearchBar from '../SearchBar/SearchBar';
 import Bookmark from '../Bookmark/Bookmark';
 import NewTabPage from '../NewTabPage/NewTabPage';
+import { useSelectorImagesColor } from '../../../hooks/useSelectorColor';
 
 const Frame = () => {
+  const frameBacgroundColor = useSelectorImagesColor('frame');
+
   return (
-    <StyledFrame>
+    <StyledFrame
+      style={{
+        backgroundColor: frameBacgroundColor,
+      }}
+    >
       <Tablist />
       <Toolbar />
       <SearchBar />

@@ -5,7 +5,7 @@ export const initialImages = {
   frame: {
     name: 'frame',
     image: '',
-    color: '#ffffff',
+    color: '#DEE1E6',
   },
   ntp_background: {
     name: 'ntp_background',
@@ -19,7 +19,7 @@ export const initialImages = {
   },
   inactive_tab: {
     name: 'inactive_tab',
-    color: '#ffffff',
+    color: '#DEE1E6',
 
   },
   frame_overlay: {

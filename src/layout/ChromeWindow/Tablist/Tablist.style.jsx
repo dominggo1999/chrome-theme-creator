@@ -5,7 +5,6 @@ export const TablistWrapper = styled.div`
     flex
     pt-2
     px-2
-    bg-indigo-500
     relative
   `}
 `;
@@ -70,15 +69,11 @@ export const TabOneCurveLeft = styled.div`
     absolute
     w-[10px]
     h-[10px] 
-    bg-[red]
     right-full
     z-50
     rounded-[8px]
-    bg-[#6366F1]
     bottom-0
   `}
-
-  box-shadow : 5px 5px 0 #34D399;
 `;
 
 export const TabTwoCurveRight = styled.div`
@@ -98,9 +93,7 @@ export const TabTwoCurveRight = styled.div`
 `;
 
 export const ActiveTab = styled(TabItem)`
-  ${tw`
-    bg-green-400
-  `}
+ 
 `;
 
 export const BackgroundTab = styled(TabItem)`

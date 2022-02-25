@@ -1,13 +1,22 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { IoIosAdd } from 'react-icons/io';
+import fontColorContrast from 'font-color-contrast';
 import {
   PageWrapper, GoogleLogo, SearchBoxWrapper, SearchBox, NtpItemsWrapper, NtpItem,
 } from './NewTabPage.style';
+import { useSelectorImagesColor, useSelectorColorOnly } from '../../../hooks/useSelectorColor';
 
 const NewTabPage = () => {
+  const ntpColor = useSelectorColorOnly('ntp_text');
+  const ntpBackground = useSelectorImagesColor('ntp_background');
+
   return (
-    <PageWrapper>
+    <PageWrapper
+      style={{
+        backgroundColor: ntpBackground,
+      }}
+    >
       <SearchBoxWrapper>
         <GoogleLogo />
         <SearchBox>
@@ -15,7 +24,11 @@ const NewTabPage = () => {
           <p>Search Google or type URL</p>
           <div></div>
         </SearchBox>
-        <NtpItemsWrapper>
+        <NtpItemsWrapper
+          style={{
+            color: ntpColor,
+          }}
+        >
           <NtpItem>
             <span>
               <FcGoogle />
@@ -23,7 +36,11 @@ const NewTabPage = () => {
             <p>Google</p>
           </NtpItem>
           <NtpItem>
-            <span>
+            <span
+              style={{
+                color: fontColorContrast(ntpBackground),
+              }}
+            >
               <IoIosAdd />
             </span>
             <p>Add Shortcut</p>

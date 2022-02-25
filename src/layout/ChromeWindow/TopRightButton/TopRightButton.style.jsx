@@ -7,6 +7,7 @@ export const ButtonWrapper = styled.div`
     right-0 
     top-0
     h-[30px]
+    rounded-md
   `}
 `;
 
