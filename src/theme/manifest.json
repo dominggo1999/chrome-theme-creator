@@ -1,1 +1,73 @@
-{"name":"my theme","version":"1.0","description":"","manifest_version":2,"theme":{"images":{},"colors":{"active_tab_text":[0,0,0],"inactive_tab_text":[255,255,255],"bookmark_text":[0,0,0],"ntp_text":[255,255,255],"title_bar":[81,64,77],"frame":[255,0,195],"ntp_background":[81,64,77],"toolbar":[239,186,169],"inactive_tab":[81,64,77]},"tints":{"buttons":[0.875,0.12,0.29]}},"properties":{"ntp_background_alignment":"bottom","ntp_background_repeat":"no-repeat"}}
+{
+  "name": "ThemeBeta.com",
+  "version": "1.0",
+  "description": "",
+  "manifest_version": 2,
+  "theme": {
+    "images": {
+      "theme_frame": "images\/theme_frame.png",
+      "theme_toolbar": "images\/theme_toolbar.png",
+      "theme_tab_background": "images\/theme_tab_background.png",
+      "theme_ntp_background": "images/theme_ntp_background.png"
+    },
+    "colors": {
+      "frame": [
+        108,
+        101,
+        76
+      ],
+      "toolbar": [
+        236,
+        220,
+        167
+      ],
+      "tab_text": [
+        108,
+        101,
+        76
+      ],
+      "tab_background_text": [
+        236,
+        220,
+        167
+      ],
+      "bookmark_text": [
+        108,
+        101,
+        76
+      ],
+      "ntp_background": [
+        255,
+        255,
+        255
+      ],
+      "ntp_text": [
+        50,
+        50,
+        50
+      ],
+      "ntp_link": [
+        6,
+        55,
+        116
+      ],
+      "button_background": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "tints": {
+      "buttons": [
+        0.13,
+        0.17,
+        0.36
+      ]
+    },
+    "properties": {
+      "ntp_background_alignment": "bottom",
+      "ntp_background_repeat": "no-repeat"
+    }
+  }
+}

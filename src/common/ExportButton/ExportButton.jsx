@@ -2,6 +2,8 @@
 import React from 'react';
 import hexToHsl from 'hex-to-hsl';
 import { saveAs } from 'file-saver';
+import domToImage from '@yzfe/dom-to-image';
+import JSZip from 'jszip';
 import Button from '../Button/Button';
 import useColorsStore, { initialColors } from '../../store/useColorsStore';
 import useImagesStore, { initialImages } from '../../store/useImagesStore';
@@ -12,13 +14,62 @@ const MANIFEST_VERSION = 2;
 const VERSION = '1.0';
 const DESCRIPTION = '';
 
+const getExtension = (filename) => filename.split('.').pop();
+
+const generateImage = (color, w, h) => {
+  const box = document.createElement('div');
+  box.style.width = `${w}px`;
+  box.style.height = `${h}px`;
+  box.style.backgroundColor = color;
+  document.body.appendChild(box);
+
+  return domToImage.toPng(box)
+    .then((dataUrl) => {
+      return dataUrl;
+    });
+};
+
 const ExportButton = ({ children, ...rest }) => {
   const getColors = useColorsStore((state) => state.getColors);
   const getImages = useImagesStore((state) => state.getImages);
 
-  const exportAndDownload = () => {
+  const exportAndDownload = async () => {
     const colors = getColors();
     const images = getImages();
+
+    const finalImages = {};
+
+    for (const key in images) {
+      if (Object.hasOwnProperty.call(images, key)) {
+        const item = images[key];
+
+        // If there is no color but image is present
+        if(item.imageOnly && item.image) {
+          finalImages[key] = {
+            dataUrl: item.image,
+            ext: getExtension(item.fileName),
+          };
+        }
+
+        if(!item.imageOnly) {
+          // Return image is exist
+          if(item.image) {
+            finalImages[key] = {
+              dataUrl: item.image,
+              ext: getExtension(item.fileName),
+            };
+          }else if(item.name !== 'ntp_background') {
+            // Generate image from color here if image not exist
+            // eslint-disable-next-line no-await-in-loop
+            const replacementImage = await generateImage(item.color, item.width, item.heigth);
+            finalImages[key] = {
+              dataUrl: replacementImage,
+              ext: 'png',
+            };
+          }
+        }
+      }
+    }
 
     const finalColors = {};
     const tints = {};
@@ -54,25 +105,41 @@ const ExportButton = ({ children, ...rest }) => {
       return i / 360;
     });
 
+    // Zip here
+
+    const zip = new JSZip();
+    const themeFolder = zip.folder('images');
+
+    const imagesFiles = {};
+
+    for (const key in finalImages) {
+      if (Object.hasOwnProperty.call(finalImages, key)) {
+        const item = finalImages[key];
+        const name = `theme_${key}.${item.ext}`;
+        imagesFiles[`theme_${key}`] = `images/${name}`;
+        themeFolder.file(name, item.dataUrl.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, ''), { base64: true });
+      }
+    }
+
     const manifest = {
       name: THEME_NAME,
       version: VERSION,
       description: DESCRIPTION,
       manifest_version: MANIFEST_VERSION,
       theme: {
-        images: {},
+        images: imagesFiles,
         colors: finalColors,
         tints,
       },
       properties: { ntp_background_alignment: 'bottom', ntp_background_repeat: 'no-repeat' },
     };
 
-    // Create a blob of the data
-    const fileToSave = new Blob([JSON.stringify(manifest)], {
-      type: 'application/json',
-    });
+    zip.file('manifest.json', JSON.stringify(manifest));
 
-    saveAs(fileToSave, 'manifest.json');
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      // see FileSaver.js
+      saveAs(content, 'my-theme.zip');
+    });
   };
 
   return (

@@ -16,11 +16,11 @@ import { useSelectorImagesColor, useSelectorColorOnly } from '../../../hooks/use
 
 const Tablist = () => {
   const frameBackgroundColor = useSelectorImagesColor('frame');
-  const inactiveTabBackground = useSelectorImagesColor('inactive_tab');
+  const inactiveTabBackground = useSelectorImagesColor('tab_background');
 
   const toolbarColor = useSelectorImagesColor('toolbar');
-  const activeTabTextColor = useSelectorColorOnly('active_tab_text');
-  const inactiveTabTextColor = useSelectorColorOnly('inactive_tab_text');
+  const activeTabTextColor = useSelectorColorOnly('tab_text');
+  const inactiveTabTextColor = useSelectorColorOnly('tab_background_text');
 
   return (
     <>

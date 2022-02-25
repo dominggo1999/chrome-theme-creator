@@ -31,10 +31,13 @@ const Basic = () => {
 
   const updateColorValue = useColorsStore((state) => state.updateValue);
   const updateImageColor = useImagesStore((state) => state.updateImagesColor);
+  const updateFileName = useImagesStore((state) => state.updateFileName);
 
   const handleUploadSuccess = (base64, fileObject) => {
     const name = fileObject.name;
     changeFileName(name);
+    updateFileName('ntp_background', name);
+
     setErrorMessage('');
     // Handle image here
     // Change theme background
@@ -46,6 +49,7 @@ const Basic = () => {
       setErrorMessage(' File type is not supported');
       changeFileName('');
       updateBackground('ntp_background', '');
+      updateFileName('ntp_background', '');
       changePallete([]);
     }
   };
@@ -67,10 +71,10 @@ const Basic = () => {
         updateImageColor('frame', primaryColor);
         updateImageColor('ntp_background', primaryColor);
         updateImageColor('toolbar', secondaryColor);
-        updateImageColor('inactive_tab', primaryColor);
+        updateImageColor('tab_background', primaryColor);
 
-        updateColorValue('active_tab_text', fontColorContrast(secondaryColor));
-        updateColorValue('inactive_tab_text', fontColorContrast(primaryColor));
+        updateColorValue('tab_text', fontColorContrast(secondaryColor));
+        updateColorValue('tab_background_text', fontColorContrast(primaryColor));
         updateColorValue('bookmark_text', fontColorContrast(secondaryColor));
         updateColorValue('ntp_text', fontColorContrast(primaryColor));
         updateColorValue('title_bar', primaryColor);

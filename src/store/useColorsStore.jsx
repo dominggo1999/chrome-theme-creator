@@ -2,12 +2,12 @@ import create from 'zustand';
 import produce from 'immer';
 
 export const initialColors = {
-  active_tab_text: {
-    name: 'active_tab_text',
+  tab_text: {
+    name: 'tab_text',
     value: '#3C4043',
   },
-  inactive_tab_text: {
-    name: 'inactive_tab_text',
+  tab_background_text: {
+    name: 'tab_background_text',
     value: '#3C4043',
   },
   bookmark_text: {

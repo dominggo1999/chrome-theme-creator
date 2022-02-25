@@ -30,22 +30,25 @@ const PropertyEditor = ({
   const updateColorValue = useColorsStore((state) => state.updateValue);
   const updateImageValue = useImagesStore((state) => state.updateImagesValue);
   const updateImageColor = useImagesStore((state) => state.updateImagesColor);
+  const updateFileName = useImagesStore((state) => state.updateFileName);
 
   const onColorChange = (newColor) => {
     colorsTab ? updateColorValue(propertyName, newColor) : updateImageColor(propertyName, newColor);
   };
 
   const onImageChange = (newImage, fileObject) => {
+    const name = fileObject.name;
     if(propertyName === 'ntp_background') {
-      const name = fileObject.name;
       changeFileName(name);
     }
 
+    updateFileName(propertyName, name);
     updateImageValue(propertyName, newImage);
   };
 
   const resetImage = () => {
     updateImageValue(propertyName, '');
+    updateFileName(propertyName, '');
   };
 
   const onImageError = (err) => {
