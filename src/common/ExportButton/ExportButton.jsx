@@ -47,7 +47,7 @@ function loadImage(url) {
   });
 }
 
-const gif2frames = async (dataUrl, width, height, setLoading) => {
+const gif2frames = async (dataUrl, width, height) => {
   // eslint-disable-next-line no-undef
   const GIFJS = GIF;
   const gif = new GIFJS({
@@ -61,10 +61,6 @@ const gif2frames = async (dataUrl, width, height, setLoading) => {
     width,
     height,
   });
-
-  if(frameData) {
-    setLoading(false);
-  }
 
   const base64GIF = await Promise.all(frameData.map((i) => loadImage(i)))
     .then((images) => {
@@ -120,7 +116,7 @@ const gif2frames = async (dataUrl, width, height, setLoading) => {
   return base64GIF;
 };
 
-const generateNtpBackground = async (dataUrl, fileName, setLoading) => {
+const generateNtpBackground = async (dataUrl, fileName) => {
   const ext = getExtension(fileName).toLowerCase();
   const page = document.getElementById('frame');
   const image = document.getElementById('ntp_background');
@@ -132,7 +128,7 @@ const generateNtpBackground = async (dataUrl, fileName, setLoading) => {
   const scaledHeight = scaledWidth / aspectRatio;
 
   if(ext === 'gif') {
-    return gif2frames(dataUrl, scaledWidth, scaledHeight, setLoading);
+    return gif2frames(dataUrl, scaledWidth, scaledHeight);
   }
 
   const img = new Image();
@@ -148,7 +144,6 @@ const generateNtpBackground = async (dataUrl, fileName, setLoading) => {
   img.src = null;
   img.remove();
 
-  setLoading(false);
   return newImageDataURL;
 };
 
@@ -264,12 +259,13 @@ const ExportButton = ({ children, ...rest }) => {
       },
     };
 
-    // zip.file('manifest.json', JSON.stringify(manifest));
+    zip.file('manifest.json', JSON.stringify(manifest));
 
-    // zip.generateAsync({ type: 'blob' }).then((content) => {
-    //   // see FileSaver.js
-    //   saveAs(content, 'my-theme.zip');
-    // });
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      // see FileSaver.js
+      setLoading(false);
+      // saveAs(content, 'my-theme.zip');
+    });
   };
 
   useEffect(() => {
