@@ -6,17 +6,35 @@ export const PageWrapper = styled.div`
     h-full
     flex
     bg-indigo-100
+    relative
+    overflow-hidden
   `}
 `;
 
 export const SearchBoxWrapper = styled.div`
   ${tw`
+    z-[999]
+    relative
     h-full
     flex
     flex-col
     w-[561px]
     mx-auto
   `}
+`;
+
+export const BackgroundImage = styled.div`
+  ${tw`
+    absolute
+    w-full 
+    bottom-0
+  `}
+
+  img{
+    ${tw`
+      w-full
+    `}
+  }
 `;
 
 export const GoogleLogo = styled.div`

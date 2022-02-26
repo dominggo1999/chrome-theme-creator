@@ -1,13 +1,19 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import React from 'react';
+import React, { useEffect } from 'react';
 import hexToHsl from 'hex-to-hsl';
 import { saveAs } from 'file-saver';
 import domToImage from '@yzfe/dom-to-image';
 import JSZip from 'jszip';
+import { GifReader } from 'omggif';
+import { decode } from 'base64-arraybuffer';
+import resizeImageData from 'resize-image-data';
 import Button from '../Button/Button';
 import useColorsStore, { initialColors } from '../../store/useColorsStore';
 import useImagesStore, { initialImages } from '../../store/useImagesStore';
 import { hexToRgbArray } from '../../util/colors';
+
+import extract from '../../lib/extract-frames/extract-frames';
 
 const THEME_NAME = 'my theme';
 const MANIFEST_VERSION = 2;
@@ -21,12 +27,108 @@ const generateImage = (color, w, h) => {
   box.style.width = `${w}px`;
   box.style.height = `${h}px`;
   box.style.backgroundColor = color;
+  box.style.zIndex = -1;
   document.body.appendChild(box);
 
   return domToImage.toPng(box)
     .then((dataUrl) => {
+      box.remove();
       return dataUrl;
     });
+};
+
+// function to retrieve an image
+function loadImage(url) {
+  return new Promise((fulfill, reject) => {
+    const image = new Image();
+    image.onload = () => fulfill(image);
+    image.onerror = (error) => reject(error);
+    image.src = url;
+  });
+}
+
+const gif2frames = async (dataUrl, width, height) => {
+  // eslint-disable-next-line no-undef
+  const GIFJS = GIF;
+  const gif = new GIFJS({
+    workers: 2,
+    quality: 10,
+    workerScript: '/gif-js/gif.worker.js',
+  });
+
+  const { frameData, framesInfo } = await extract({
+    input: dataUrl,
+  });
+
+  const base64GIF = await Promise.all(frameData.map((i) => loadImage(i)))
+    .then((images) => {
+      const scaledFrames = images.map((img) => {
+        const elem = document.createElement('canvas');
+        const newCtx = elem.getContext('2d');
+        elem.width = width;
+        elem.height = height;
+        newCtx.drawImage(img, 0, 0, width, height);
+        const scaledBase64 = newCtx.canvas.toDataURL('image/png', 1.0);
+        img.src = scaledBase64;
+        return img;
+      });
+
+      return scaledFrames;
+    })
+    .then((images) => {
+      const getNewGIF = () => {
+        return new Promise((fulfill, reject) => {
+          // add frames for each image
+          images.forEach((image, id) => {
+            gif.addFrame(image, { delay: framesInfo[id].delay * 10 || 0 });
+          });
+
+          gif.on('finished', (blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+              const base64data = reader.result;
+              gif.freeWorkers.forEach((w) => w.terminate());
+              gif.abort();
+
+              fulfill(base64data);
+            };
+          });
+
+          gif.render();
+        });
+      };
+      return getNewGIF();
+    });
+
+  return base64GIF;
+};
+
+const generateNtpBackground = async (dataUrl, fileName) => {
+  const ext = getExtension(fileName).toLowerCase();
+  const page = document.getElementById('frame');
+  const image = document.getElementById('ntp_background');
+
+  const w = image.clientWidth;
+  const h = image.clientHeight;
+  const aspectRatio = w / h;
+  const scaledWidth = page.clientWidth;
+  const scaledHeight = scaledWidth / aspectRatio;
+
+  if(ext === 'gif') {
+    // loadGifFrameList(dataUrl, scaledWidth, scaledHeight);
+    return gif2frames(dataUrl, scaledWidth, scaledHeight);
+  }
+
+  const img = new Image();
+  img.src = dataUrl;
+  const elem = document.createElement('canvas');
+  const ctx = elem.getContext('2d');
+  elem.width = scaledWidth;
+  elem.height = scaledHeight;
+  ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
+
+  return ctx.canvas.toDataURL(`image/${getExtension(fileName).toLowerCase()}`, 1.0);
 };
 
 const ExportButton = ({ children, ...rest }) => {
@@ -54,13 +156,13 @@ const ExportButton = ({ children, ...rest }) => {
         if(!item.imageOnly) {
           // Return image is exist
           if(item.image) {
+            const scaledDataUrl = await generateNtpBackground(item.image, item.fileName);
             finalImages[key] = {
-              dataUrl: item.image,
+              dataUrl: scaledDataUrl,
               ext: getExtension(item.fileName),
             };
           }else if(item.name !== 'ntp_background') {
             // Generate image from color here if image not exist
-            // eslint-disable-next-line no-await-in-loop
             const replacementImage = await generateImage(item.color, item.width, item.heigth);
             finalImages[key] = {
               dataUrl: replacementImage,
@@ -111,6 +213,7 @@ const ExportButton = ({ children, ...rest }) => {
     const themeFolder = zip.folder('images');
 
     const imagesFiles = {};
+    // console.log(finalImages);
 
     for (const key in finalImages) {
       if (Object.hasOwnProperty.call(finalImages, key)) {
@@ -130,8 +233,11 @@ const ExportButton = ({ children, ...rest }) => {
         images: imagesFiles,
         colors: finalColors,
         tints,
+        properties: {
+          ntp_background_alignment: 'bottom',
+          ntp_background_repeat: 'no-repeat',
+        },
       },
-      properties: { ntp_background_alignment: 'bottom', ntp_background_repeat: 'no-repeat' },
     };
 
     zip.file('manifest.json', JSON.stringify(manifest));
@@ -141,6 +247,10 @@ const ExportButton = ({ children, ...rest }) => {
       saveAs(content, 'my-theme.zip');
     });
   };
+
+  useEffect(() => {
+    // loadGifFrameList('https://c.tenor.com/6MsukwHKJ58AAAAM/ara-anime.gif');
+  }, []);
 
   return (
     <Button

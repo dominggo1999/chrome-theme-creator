@@ -12,6 +12,7 @@ const Frame = () => {
 
   return (
     <StyledFrame
+      id="frame"
       style={{
         backgroundColor: frameBacgroundColor,
       }}

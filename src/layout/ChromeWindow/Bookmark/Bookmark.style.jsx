@@ -8,6 +8,8 @@ export const BookmarkWrapper = styled.div`
     h-[38px]
     items-center
     px-1
+    relative
+    z-[999]
   `}
 `;
 

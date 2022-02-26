@@ -3,20 +3,34 @@ import { FcGoogle } from 'react-icons/fc';
 import { IoIosAdd } from 'react-icons/io';
 import fontColorContrast from 'font-color-contrast';
 import {
-  PageWrapper, GoogleLogo, SearchBoxWrapper, SearchBox, NtpItemsWrapper, NtpItem,
+  PageWrapper,
+  GoogleLogo,
+  SearchBoxWrapper,
+  SearchBox,
+  NtpItemsWrapper,
+  NtpItem,
+  BackgroundImage,
 } from './NewTabPage.style';
-import { useSelectorImagesColor, useSelectorColorOnly } from '../../../hooks/useSelectorColor';
+import { useSelectorImagesColor, useSelectorColorOnly, useSelectorImageValue } from '../../../hooks/useSelectorColor';
 
 const NewTabPage = () => {
   const ntpColor = useSelectorColorOnly('ntp_text');
   const ntpBackground = useSelectorImagesColor('ntp_background');
+  const ntpBackgroundImage = useSelectorImageValue('ntp_background');
 
   return (
-    <PageWrapper
-      style={{
-        backgroundColor: ntpBackground,
-      }}
-    >
+    <PageWrapper id="ntp_page">
+      {
+        ntpBackgroundImage && (
+        <BackgroundImage id="ntp_background">
+
+          <img
+            src={ntpBackgroundImage}
+            alt="ntp_background"
+          />
+        </BackgroundImage>
+        )
+    }
       <SearchBoxWrapper>
         <GoogleLogo />
         <SearchBox>

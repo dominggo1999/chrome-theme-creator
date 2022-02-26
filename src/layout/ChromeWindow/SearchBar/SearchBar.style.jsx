@@ -7,6 +7,8 @@ export const SearchBarWrapper = styled.div`
     h-[38px]
     bg-[#34D399]
     px-1
+    relative
+    z-[999]
   `}
 `;
 

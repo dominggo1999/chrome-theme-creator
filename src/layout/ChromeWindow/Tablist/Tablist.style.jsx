@@ -6,6 +6,7 @@ export const TablistWrapper = styled.div`
     pt-2
     px-2
     relative
+    z-[999]
   `}
 `;
 
@@ -108,6 +109,6 @@ export const DividerBlowTab = styled.div`
     h-[6px]
     bg-green-400
     relative
-    z-[90]
+    z-[1000]
   `}
 `;

@@ -8,3 +8,7 @@ export const useSelectorColorOnly = (property) => {
 export const useSelectorImagesColor = (property) => {
   return useImagesStore((state) => state.images[property].color);
 };
+
+export const useSelectorImageValue = (property) => {
+  return useImagesStore((state) => state.images[property].image);
+};
