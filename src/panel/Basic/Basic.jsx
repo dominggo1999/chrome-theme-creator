@@ -77,7 +77,7 @@ const Basic = () => {
         updateColorValue('tab_background_text', fontColorContrast(primaryColor));
         updateColorValue('bookmark_text', fontColorContrast(secondaryColor));
         updateColorValue('ntp_text', fontColorContrast(primaryColor));
-        updateColorValue('title_bar', primaryColor);
+        updateColorValue('button_background', primaryColor);
         updateColorValue('navigation', primaryColor);
       };
     }
