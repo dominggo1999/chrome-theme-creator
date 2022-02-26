@@ -1,5 +1,6 @@
 import ndarray from 'ndarray';
 import ops from 'ndarray-ops';
+import { bytesToBase64 } from 'byte-base64';
 import getPixels from '../get-pixels/getPixels';
 
 function handleData(array, data, frame) {
@@ -78,7 +79,8 @@ function handleData(array, data, frame) {
 const extract = async (opts) => {
   const {
     input,
-    coalesce = true,
+    width,
+    height,
   } = opts;
 
   const { results, framesInfo } = await getPixels(input);
@@ -90,6 +92,7 @@ const extract = async (opts) => {
   const frameData = [];
   let maxAccumulatedFrame = 0;
 
+  const objectURL = window.URL || window.webkitURL;
   for (let i = 0; i < results.shape[0]; i += 1) {
     // eslint-disable-next-line no-loop-func
 
@@ -120,8 +123,9 @@ const extract = async (opts) => {
     }
 
     const myArray = results.pick(i); //= your data in a UInt8Array
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+
+    let canvas = document.createElement('canvas');
+    let context = canvas.getContext('2d');
 
     canvas.width = myArray.shape[0];
     canvas.height = myArray.shape[1];
@@ -130,7 +134,12 @@ const extract = async (opts) => {
     data = handleData(myArray, data);
     context.putImageData(imageData, 0, 0);
 
-    frameData.push(canvas.toDataURL());
+    let frameDataURL = canvas.toDataURL();
+
+    frameData.push(frameDataURL);
+    frameDataURL = null;
+    canvas = null;
+    context = null;
   }
 
   return { frameData, framesInfo };

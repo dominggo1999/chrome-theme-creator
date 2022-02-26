@@ -1,13 +1,10 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import hexToHsl from 'hex-to-hsl';
 import { saveAs } from 'file-saver';
 import domToImage from '@yzfe/dom-to-image';
 import JSZip from 'jszip';
-import { GifReader } from 'omggif';
-import { decode } from 'base64-arraybuffer';
-import resizeImageData from 'resize-image-data';
 import Button from '../Button/Button';
 import useColorsStore, { initialColors } from '../../store/useColorsStore';
 import useImagesStore, { initialImages } from '../../store/useImagesStore';
@@ -41,13 +38,16 @@ const generateImage = (color, w, h) => {
 function loadImage(url) {
   return new Promise((fulfill, reject) => {
     const image = new Image();
-    image.onload = () => fulfill(image);
+    image.onload = () => {
+      fulfill(image);
+      image.onload = null;
+    };
     image.onerror = (error) => reject(error);
     image.src = url;
   });
 }
 
-const gif2frames = async (dataUrl, width, height) => {
+const gif2frames = async (dataUrl, width, height, setLoading) => {
   // eslint-disable-next-line no-undef
   const GIFJS = GIF;
   const gif = new GIFJS({
@@ -58,17 +58,26 @@ const gif2frames = async (dataUrl, width, height) => {
 
   const { frameData, framesInfo } = await extract({
     input: dataUrl,
+    width,
+    height,
   });
+
+  if(frameData) {
+    setLoading(false);
+  }
 
   const base64GIF = await Promise.all(frameData.map((i) => loadImage(i)))
     .then((images) => {
       const scaledFrames = images.map((img) => {
         const elem = document.createElement('canvas');
-        const newCtx = elem.getContext('2d');
+        let newCtx = elem.getContext('2d');
         elem.width = width;
         elem.height = height;
         newCtx.drawImage(img, 0, 0, width, height);
         const scaledBase64 = newCtx.canvas.toDataURL('image/png', 1.0);
+
+        elem.remove();
+        newCtx = null;
         img.src = scaledBase64;
         return img;
       });
@@ -88,10 +97,17 @@ const gif2frames = async (dataUrl, width, height) => {
             reader.readAsDataURL(blob);
             reader.onloadend = () => {
               const base64data = reader.result;
+              fulfill(base64data);
+
+              // Clean up
               gif.freeWorkers.forEach((w) => w.terminate());
               gif.abort();
 
-              fulfill(base64data);
+              // remove all images
+              images.forEach((i) => {
+                i.src = '';
+                i.remove();
+              });
             };
           });
 
@@ -104,7 +120,7 @@ const gif2frames = async (dataUrl, width, height) => {
   return base64GIF;
 };
 
-const generateNtpBackground = async (dataUrl, fileName) => {
+const generateNtpBackground = async (dataUrl, fileName, setLoading) => {
   const ext = getExtension(fileName).toLowerCase();
   const page = document.getElementById('frame');
   const image = document.getElementById('ntp_background');
@@ -116,8 +132,7 @@ const generateNtpBackground = async (dataUrl, fileName) => {
   const scaledHeight = scaledWidth / aspectRatio;
 
   if(ext === 'gif') {
-    // loadGifFrameList(dataUrl, scaledWidth, scaledHeight);
-    return gif2frames(dataUrl, scaledWidth, scaledHeight);
+    return gif2frames(dataUrl, scaledWidth, scaledHeight, setLoading);
   }
 
   const img = new Image();
@@ -128,14 +143,23 @@ const generateNtpBackground = async (dataUrl, fileName) => {
   elem.height = scaledHeight;
   ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
 
-  return ctx.canvas.toDataURL(`image/${getExtension(fileName).toLowerCase()}`, 1.0);
+  const newImageDataURL = ctx.canvas.toDataURL(`image/${getExtension(fileName).toLowerCase()}`, 1.0);
+  elem.remove();
+  img.src = null;
+  img.remove();
+
+  setLoading(false);
+  return newImageDataURL;
 };
 
 const ExportButton = ({ children, ...rest }) => {
   const getColors = useColorsStore((state) => state.getColors);
   const getImages = useImagesStore((state) => state.getImages);
+  const [loading, setLoading] = useState(false);
 
   const exportAndDownload = async () => {
+    setLoading(true);
+
     const colors = getColors();
     const images = getImages();
 
@@ -156,7 +180,7 @@ const ExportButton = ({ children, ...rest }) => {
         if(!item.imageOnly) {
           // Return image is exist
           if(item.image) {
-            const scaledDataUrl = await generateNtpBackground(item.image, item.fileName);
+            const scaledDataUrl = await generateNtpBackground(item.image, item.fileName, setLoading);
             finalImages[key] = {
               dataUrl: scaledDataUrl,
               ext: getExtension(item.fileName),
@@ -240,24 +264,26 @@ const ExportButton = ({ children, ...rest }) => {
       },
     };
 
-    zip.file('manifest.json', JSON.stringify(manifest));
+    // zip.file('manifest.json', JSON.stringify(manifest));
 
-    zip.generateAsync({ type: 'blob' }).then((content) => {
-      // see FileSaver.js
-      saveAs(content, 'my-theme.zip');
-    });
+    // zip.generateAsync({ type: 'blob' }).then((content) => {
+    //   // see FileSaver.js
+    //   saveAs(content, 'my-theme.zip');
+    // });
   };
 
   useEffect(() => {
+
     // loadGifFrameList('https://c.tenor.com/6MsukwHKJ58AAAAM/ara-anime.gif');
   }, []);
 
   return (
     <Button
-      onClick={exportAndDownload}
+      disabled={loading}
+      onClick={!loading ? exportAndDownload : null}
       {...rest}
     >
-      {children}
+      {!loading ? children : 'loading...'}
     </Button>
   );
 };
