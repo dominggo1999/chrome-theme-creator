@@ -12,7 +12,7 @@ import {
 import { useSelectorColorOnly } from '../../../hooks/useSelectorColor';
 
 const TopRightButton = () => {
-  const buttonBackground = useSelectorColorOnly('title_bar');
+  const buttonBackground = useSelectorColorOnly('button_background');
 
   return (
     <ButtonWrapper

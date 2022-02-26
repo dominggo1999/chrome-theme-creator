@@ -18,8 +18,8 @@ export const initialColors = {
     name: 'ntp_text',
     value: '#000000',
   },
-  title_bar: {
-    name: 'title_bar',
+  button_background: {
+    name: 'button_background',
     value: '#DEE1E6',
   },
   navigation: {
