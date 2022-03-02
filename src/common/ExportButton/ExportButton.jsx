@@ -193,7 +193,7 @@ const ExportButton = ({ children, ...rest }) => {
       finalColors = null;
       gif = null;
       setLoading(false);
-      // saveAs(content, 'my-theme.zip');
+      saveAs(content, 'my-theme.zip');
     });
   };
 
