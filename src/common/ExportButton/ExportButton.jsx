@@ -35,6 +35,7 @@ const generateImage = (color, w, h) => {
     });
 };
 
+let gif;
 const generateNtpBackground = async (dataUrl, fileName) => {
   const ext = getExtension(fileName).toLowerCase();
   const page = document.getElementById('frame');
@@ -47,7 +48,7 @@ const generateNtpBackground = async (dataUrl, fileName) => {
   const scaledHeight = scaledWidth / aspectRatio;
 
   if(ext === 'gif') {
-    const gif = extract({
+    gif = extract({
       input: dataUrl,
       width: w,
       height: h,
@@ -190,6 +191,7 @@ const ExportButton = ({ children, ...rest }) => {
     zip.generateAsync({ type: 'blob' }).then((content) => {
       imagesFiles = null;
       finalColors = null;
+      gif = null;
       setLoading(false);
       // saveAs(content, 'my-theme.zip');
     });

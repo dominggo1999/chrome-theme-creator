@@ -31,7 +31,6 @@ export const extract = async (opts) => {
         e = null;
         worker.onmessage = null;
         worker.terminate();
-        e.b64GIF = null;
       }
     };
   });
