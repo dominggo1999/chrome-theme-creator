@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
+// https://stackoverflow.com/questions/38787951/disabling-data-url-jpg-cache
 import React, { useEffect, useState } from 'react';
 import hexToHsl from 'hex-to-hsl';
 import { saveAs } from 'file-saver';
@@ -10,7 +11,7 @@ import useColorsStore, { initialColors } from '../../store/useColorsStore';
 import useImagesStore, { initialImages } from '../../store/useImagesStore';
 import { hexToRgbArray } from '../../util/colors';
 
-import extract from '../../lib/extract-frames/extract-frames';
+import { extract } from '../../lib/extract-frames/extract-frames';
 
 const THEME_NAME = 'my theme';
 const MANIFEST_VERSION = 2;
@@ -34,88 +35,6 @@ const generateImage = (color, w, h) => {
     });
 };
 
-// function to retrieve an image
-function loadImage(url) {
-  return new Promise((fulfill, reject) => {
-    const image = new Image();
-    image.onload = () => {
-      fulfill(image);
-      image.onload = null;
-    };
-    image.onerror = (error) => reject(error);
-    image.src = url;
-  });
-}
-
-const gif2frames = async (dataUrl, width, height) => {
-  // eslint-disable-next-line no-undef
-  const GIFJS = GIF;
-  const gif = new GIFJS({
-    workers: 2,
-    quality: 10,
-    workerScript: '/gif-js/gif.worker.js',
-  });
-
-  const { frameData, framesInfo } = await extract({
-    input: dataUrl,
-    width,
-    height,
-  });
-
-  const base64GIF = await Promise.all(frameData.map((i) => loadImage(i)))
-    .then((images) => {
-      const scaledFrames = images.map((img) => {
-        const elem = document.createElement('canvas');
-        let newCtx = elem.getContext('2d');
-        elem.width = width;
-        elem.height = height;
-        newCtx.drawImage(img, 0, 0, width, height);
-        const scaledBase64 = newCtx.canvas.toDataURL('image/png', 1.0);
-
-        elem.remove();
-        newCtx = null;
-        img.src = scaledBase64;
-        return img;
-      });
-
-      return scaledFrames;
-    })
-    .then((images) => {
-      const getNewGIF = () => {
-        return new Promise((fulfill, reject) => {
-          // add frames for each image
-          images.forEach((image, id) => {
-            gif.addFrame(image, { delay: framesInfo[id].delay * 10 || 0 });
-          });
-
-          gif.on('finished', (blob) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = () => {
-              const base64data = reader.result;
-              fulfill(base64data);
-
-              // Clean up
-              gif.freeWorkers.forEach((w) => w.terminate());
-              gif.abort();
-
-              // remove all images
-              images.forEach((i) => {
-                i.src = '';
-                i.remove();
-              });
-            };
-          });
-
-          gif.render();
-        });
-      };
-      return getNewGIF();
-    });
-
-  return base64GIF;
-};
-
 const generateNtpBackground = async (dataUrl, fileName) => {
   const ext = getExtension(fileName).toLowerCase();
   const page = document.getElementById('frame');
@@ -128,21 +47,29 @@ const generateNtpBackground = async (dataUrl, fileName) => {
   const scaledHeight = scaledWidth / aspectRatio;
 
   if(ext === 'gif') {
-    return gif2frames(dataUrl, scaledWidth, scaledHeight);
+    const gif = extract({
+      input: dataUrl,
+      width: w,
+      height: h,
+      targetWidth: scaledWidth,
+      targetHeight: scaledHeight,
+    });
+
+    return gif;
   }
 
-  const img = new Image();
+  let img = new Image();
   img.src = dataUrl;
-  const elem = document.createElement('canvas');
+  let elem = document.createElement('canvas');
   const ctx = elem.getContext('2d');
   elem.width = scaledWidth;
   elem.height = scaledHeight;
   ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
 
   const newImageDataURL = ctx.canvas.toDataURL(`image/${getExtension(fileName).toLowerCase()}`, 1.0);
-  elem.remove();
+  elem = null;
   img.src = null;
-  img.remove();
+  img = null;
 
   return newImageDataURL;
 };
@@ -192,7 +119,7 @@ const ExportButton = ({ children, ...rest }) => {
       }
     }
 
-    const finalColors = {};
+    let finalColors = {};
     const tints = {};
 
     for (const key in colors) {
@@ -227,12 +154,10 @@ const ExportButton = ({ children, ...rest }) => {
     });
 
     // Zip here
-
     const zip = new JSZip();
     const themeFolder = zip.folder('images');
 
-    const imagesFiles = {};
-    // console.log(finalImages);
+    let imagesFiles = {};
 
     for (const key in finalImages) {
       if (Object.hasOwnProperty.call(finalImages, key)) {
@@ -240,6 +165,7 @@ const ExportButton = ({ children, ...rest }) => {
         const name = `theme_${key}.${item.ext}`;
         imagesFiles[`theme_${key}`] = `images/${name}`;
         themeFolder.file(name, item.dataUrl.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, ''), { base64: true });
+        window.URL.revokeObjectURL(item.dataUrl);
       }
     }
 
@@ -262,7 +188,8 @@ const ExportButton = ({ children, ...rest }) => {
     zip.file('manifest.json', JSON.stringify(manifest));
 
     zip.generateAsync({ type: 'blob' }).then((content) => {
-      // see FileSaver.js
+      imagesFiles = null;
+      finalColors = null;
       setLoading(false);
       // saveAs(content, 'my-theme.zip');
     });

@@ -1,10 +1,26 @@
 import { GifReader } from 'omggif';
 import ndarray from 'ndarray';
 
-const getPixels = async (dataUrl) => {
-  const res = await fetch(dataUrl);
-  const blob = await res.blob();
+const dataURItoBlob = (dataURI) => {
+  const byteString = atob(dataURI.split(',')[1]);
 
+  // separate out the mime component
+  const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+  // write the bytes of the string to an ArrayBuffer
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i += 1) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  // write the ArrayBuffer to a blob, and you're done
+  const blob = new Blob([ab], { type: mimeString });
+  return blob;
+};
+
+const getPixels = async (dataUrl) => {
+  const blob = dataURItoBlob(dataUrl);
   const arrayBuffer = await blob.arrayBuffer();
   const intArray = await new Uint8Array(arrayBuffer);
   const reader = await new GifReader(intArray);
