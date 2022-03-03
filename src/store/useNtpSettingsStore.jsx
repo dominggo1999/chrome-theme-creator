@@ -1,10 +1,10 @@
 import create from 'zustand';
 import produce from 'immer';
 
-export const defaultHorizontalAlignment = 'center';
-export const defaultVerticalAlignment = 'bottom';
-export const defaultRepeatMode = 'no-repeat';
-export const defaultBackgroundSize = 'normal';
+const defaultHorizontalAlignment = 'center';
+const defaultVerticalAlignment = 'bottom';
+const defaultRepeatMode = 'no-repeat';
+const defaultBackgroundSize = 'normal';
 
 const updateNtpSettings = (set, key, newValue) => {
   return set(produce((draft) => {
@@ -20,6 +20,14 @@ const useNtpSettingsStore = create((set, get) => {
     repeatMode: defaultRepeatMode,
     backgroundSize: defaultBackgroundSize,
     updateNtpSettings: (key, newValue) => updateNtpSettings(set, key, newValue),
+    getNtpSettings: () => {
+      return {
+        horizontalAlignment: get().horizontalAlignment,
+        verticalAlignment: get().verticalAlignment,
+        repeatMode: get().repeatMode,
+        backgroundSize: get().backgroundSize,
+      };
+    },
   };
 });
 

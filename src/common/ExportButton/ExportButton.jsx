@@ -12,6 +12,7 @@ import useImagesStore, { initialImages } from '../../store/useImagesStore';
 import { hexToRgbArray } from '../../util/colors';
 
 import { extract } from '../../lib/extract-frames/extract-frames';
+import useNtpSettingsStore from '../../store/useNtpSettingsStore';
 
 const THEME_NAME = 'my theme';
 const MANIFEST_VERSION = 2;
@@ -36,7 +37,9 @@ const generateImage = (color, w, h) => {
 };
 
 let gif;
-const generateNtpBackground = async (dataUrl, fileName) => {
+const generateNtpBackground = async (dataUrl, fileName, backgroundSize) => {
+  if(backgroundSize === 'normal') return dataUrl;
+
   const ext = getExtension(fileName).toLowerCase();
   const page = document.getElementById('frame');
   const image = document.getElementById('ntp_background');
@@ -75,7 +78,7 @@ const generateNtpBackground = async (dataUrl, fileName) => {
   return newImageDataURL;
 };
 
-const validateImage = async (dataUrl, fileName, width, height) => {
+const validateImage = async (dataUrl, fileName) => {
   const ext = getExtension(fileName).toLowerCase();
 
   if(ext !== 'jpg') {
@@ -100,6 +103,7 @@ const validateImage = async (dataUrl, fileName, width, height) => {
 const ExportButton = ({ children, ...rest }) => {
   const getColors = useColorsStore((state) => state.getColors);
   const getImages = useImagesStore((state) => state.getImages);
+  const getNtpSettings = useNtpSettingsStore((state) => state.getNtpSettings);
   const [loading, setLoading] = useState(false);
 
   const exportAndDownload = async () => {
@@ -107,6 +111,15 @@ const ExportButton = ({ children, ...rest }) => {
 
     const colors = getColors();
     const images = getImages();
+    const settings = getNtpSettings();
+    const {
+      horizontalAlignment,
+      verticalAlignment,
+      repeatMode,
+      backgroundSize,
+    } = settings;
+
+    const backgroundPosition = `${horizontalAlignment} ${verticalAlignment}`.trim();
 
     const finalImages = {};
 
@@ -117,7 +130,7 @@ const ExportButton = ({ children, ...rest }) => {
         // Return image is exist
         if(item.image) {
           const imageDataURL = item.name === 'ntp_background'
-            ? await generateNtpBackground(item.image, item.fileName, setLoading)
+            ? await generateNtpBackground(item.image, item.fileName, backgroundSize)
             : await validateImage(item.image, item.fileName, item.width, item.heigth);
 
           const ext = getExtension(item.fileName);
@@ -197,11 +210,13 @@ const ExportButton = ({ children, ...rest }) => {
         colors: finalColors,
         tints,
         properties: {
-          ntp_background_alignment: 'bottom',
-          ntp_background_repeat: 'no-repeat',
+          ntp_background_alignment: backgroundPosition,
+          ntp_background_repeat: repeatMode,
         },
       },
     };
+
+    console.log(backgroundPosition);
 
     zip.file('manifest.json', JSON.stringify(manifest));
 
