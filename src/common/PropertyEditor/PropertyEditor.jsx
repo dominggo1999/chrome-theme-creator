@@ -12,6 +12,7 @@ import {
 } from './PropertyEditor.style';
 import ImagePicker from '../ImagePicker/ImagePicker';
 import { propertyNameToLabel } from '../../util/formatting';
+import useHoverState from '../../store/useHoverStore';
 
 const PropertyEditor = ({
   propertyName,
@@ -19,6 +20,8 @@ const PropertyEditor = ({
   colorsTab,
   changeFileName,
 }) => {
+  const updateHoverState = useHoverState((state) => state.updateHoverState);
+
   const color = colorsTab
     ? useColorsStore(((state) => state.colors[propertyName].value))
     : useImagesStore(((state) => state.images[propertyName].color));
@@ -56,10 +59,21 @@ const PropertyEditor = ({
     resetImage();
   };
 
+  const handleMouseEnter = () => {
+    updateHoverState(propertyName, true);
+  };
+
+  const handleMouseLeave = () => {
+    updateHoverState(propertyName, false);
+  };
+
   const label = propertyNameToLabel(propertyName);
 
   return (
-    <PropertyEditorWrapper>
+    <PropertyEditorWrapper
+      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouseEnter}
+    >
       <Label>
         {label}
       </Label>
