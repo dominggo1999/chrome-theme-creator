@@ -9,6 +9,19 @@ export const PropertyEditorWrapper = styled.div`
     px-4
     select-none
     relative
+  `}
+
+  ${({ hoverable }) => hoverable && tw`hover:bg-[#32354e]`}
+  ${({ active }) => active && tw`bg-[#32354e]`}
+`;
+
+export const PropertyEditorMask = styled.div`
+  ${tw`
+    top-0 
+    left-0
+    absolute
+    w-full 
+    h-full 
     hover:bg-[#32354e]
   `}
 `;

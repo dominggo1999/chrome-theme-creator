@@ -5,6 +5,7 @@ import ColorPicker from '../ColorPicker/ColorPicker';
 import useColorsStore from '../../store/useColorsStore';
 import useImagesStore from '../../store/useImagesStore';
 import {
+  PropertyEditorMask,
   PropertyEditorWrapper,
   Label,
   Controllers,
@@ -13,12 +14,18 @@ import {
 } from './PropertyEditor.style';
 import ImagePicker from '../ImagePicker/ImagePicker';
 import { propertyNameToLabel } from '../../util/formatting';
+import useHoverableStore from '../../store/useHoverableStore';
 
 const PropertyEditor = ({
   propertyName,
   colorsTab,
   changeFileName,
 }) => {
+  const [active, setActive] = useState(false);
+
+  const setHoverable = useHoverableStore((state) => state.setHoverable);
+  const hoverable = useHoverableStore((state) => state.hoverable);
+
   const color = colorsTab
     ? useColorsStore(((state) => state.colors[propertyName].value))
     : useImagesStore(((state) => state.images[propertyName].color));
@@ -58,10 +65,19 @@ const PropertyEditor = ({
   const label = propertyNameToLabel(propertyName);
 
   return (
-    <PropertyEditorWrapper>
-
+    <PropertyEditorWrapper
+      hoverable={hoverable}
+      active={active}
+    >
+      {/* <PropertyEditorMask
+        style={{
+          pointerEvents: hoverable ? 'auto' : 'none',
+        }}
+      /> */}
       <Label>
-        {label}
+        <p>
+          {label}
+        </p>
       </Label>
       <Controllers>
         <ControllerLeft>
@@ -85,9 +101,13 @@ const PropertyEditor = ({
           <ColorPicker
             onChange={onColorChange}
             color={color}
+            setActive={setActive}
+            setHoverable={setHoverable}
           />
           <Palette
             onChoose={onColorChange}
+            setActive={setActive}
+            setHoverable={setHoverable}
           />
 
         </ControllerRight>

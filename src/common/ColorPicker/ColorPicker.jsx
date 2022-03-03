@@ -9,7 +9,7 @@ import {
 import useOnClickOutside from '../../hooks/useClickOutside';
 
 const ColorPicker = ({
-  onChange, color, ...rest
+  setActive, setHoverable, onChange, color, ...rest
 }) => {
   const [open, setOpen] = useState(false);
   const pickerRef = useRef();
@@ -18,10 +18,14 @@ const ColorPicker = ({
 
   const openPicker = () => {
     setOpen(true);
+    setActive(true);
+    setHoverable(false);
   };
 
   const closePicker = () => {
     setOpen(false);
+    setActive(false);
+    setHoverable(true);
   };
 
   useEffect(() => {
