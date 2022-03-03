@@ -22,7 +22,7 @@ const Images = () => {
   const changeFileName = useBackgroundNameStore((state) => state.changeFileName);
 
   return (
-    <PanelWrapper>
+    <PanelWrapper noPadding>
       <ImagesWrapper>
         {
           imagesProperties.map((item) => {

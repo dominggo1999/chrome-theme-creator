@@ -9,7 +9,7 @@ const Colors = () => {
   const colorOnlyProperties = useColorsStore((state) => Object.keys(state.colors), shallow);
 
   return (
-    <PanelWrapper>
+    <PanelWrapper noPadding>
       <ColorsWrapper>
         {
           colorOnlyProperties.map((item) => {

@@ -5,6 +5,10 @@ export const PropertyEditorWrapper = styled.div`
   ${tw`
     w-full
     flex 
+    hover:bg-[#32354e]
+    py-2
+    px-4
+    select-none
   `}
 `;
 
