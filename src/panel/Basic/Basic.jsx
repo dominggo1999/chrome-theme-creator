@@ -21,6 +21,7 @@ import ExportButton from '../../common/ExportButton/ExportButton';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
+
   const changePallete = usePaletteStore((state) => state.changePallete);
 
   const updateBackground = useImagesStore((state) => state.updateImagesValue);

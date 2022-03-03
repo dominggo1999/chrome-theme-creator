@@ -1,10 +1,12 @@
 import React from 'react';
+import { useState } from 'react/cjs/react.development';
 import Palette from '../Palette/Palette';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import useColorsStore from '../../store/useColorsStore';
 import useImagesStore from '../../store/useImagesStore';
 import {
   PropertyEditorWrapper,
+  PropertyEditorMask,
   Label,
   Controllers,
   ControllerLeft,
@@ -12,16 +14,12 @@ import {
 } from './PropertyEditor.style';
 import ImagePicker from '../ImagePicker/ImagePicker';
 import { propertyNameToLabel } from '../../util/formatting';
-import useHoverState from '../../store/useHoverStore';
 
 const PropertyEditor = ({
   propertyName,
-  imageOnly,
   colorsTab,
   changeFileName,
 }) => {
-  const updateHoverState = useHoverState((state) => state.updateHoverState);
-
   const color = colorsTab
     ? useColorsStore(((state) => state.colors[propertyName].value))
     : useImagesStore(((state) => state.images[propertyName].color));
@@ -55,25 +53,14 @@ const PropertyEditor = ({
   };
 
   const onImageError = (err) => {
-    console.log(err);
     resetImage();
-  };
-
-  const handleMouseEnter = () => {
-    updateHoverState(propertyName, true);
-  };
-
-  const handleMouseLeave = () => {
-    updateHoverState(propertyName, false);
   };
 
   const label = propertyNameToLabel(propertyName);
 
   return (
-    <PropertyEditorWrapper
-      onMouseLeave={handleMouseLeave}
-      onMouseEnter={handleMouseEnter}
-    >
+    <PropertyEditorWrapper>
+
       <Label>
         {label}
       </Label>
@@ -96,20 +83,14 @@ const PropertyEditor = ({
 
         <ControllerRight colorsTab={colorsTab}>
 
-          {
-            !imageOnly && (
-              <>
-                <ColorPicker
-                  onChange={onColorChange}
-                  color={color}
-                />
-                <Palette
-                  onChoose={onColorChange}
-                  a="1"
-                />
-              </>
-            )
-          }
+          <ColorPicker
+            onChange={onColorChange}
+            color={color}
+          />
+          <Palette
+            onChoose={onColorChange}
+          />
+
         </ControllerRight>
       </Controllers>
     </PropertyEditorWrapper>

@@ -12,7 +12,6 @@ export const Icon = styled.button`
   ${tw`
     h-full
     w-full
-    bg-red-500
     rounded-full
     border-2
     border-white

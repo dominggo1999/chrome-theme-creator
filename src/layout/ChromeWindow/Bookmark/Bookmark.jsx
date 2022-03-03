@@ -8,11 +8,14 @@ const Bookmark = () => {
   const bookmarkTextColor = useSelectorColorOnly('bookmark_text');
   const toolbarBackgroundImage = useSelectorImageValue('toolbar');
 
+  const color = bookmarkTextColor;
+  const backgroundColor = toolbarBackgroundImage ? 'transparent' : toolbarColor;
+
   return (
     <BookmarkWrapper
       style={{
-        backgroundColor: toolbarBackgroundImage ? 'transparent' : toolbarColor,
-        color: bookmarkTextColor,
+        backgroundColor,
+        color,
       }}
     >
       <BookmarkItem>

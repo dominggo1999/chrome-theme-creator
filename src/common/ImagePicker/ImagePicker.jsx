@@ -14,6 +14,7 @@ const ImagePicker = ({
   onImageError,
   onImageChange,
   propertyName,
+  ...rest
 }) => {
   const [errorMessage, setErrorMessage] = useState();
 
@@ -39,7 +40,7 @@ const ImagePicker = ({
 
   return (
     <>
-      <ImagePickerWrapper>
+      <ImagePickerWrapper {...rest}>
 
         {
           !image && !errorMessage

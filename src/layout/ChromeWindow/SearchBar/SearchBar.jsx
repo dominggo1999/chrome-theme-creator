@@ -13,10 +13,12 @@ const SearchBar = () => {
   const navigationColor = useSelectorColorOnly('navigation');
   const toolbarBackgroundImage = useSelectorImageValue('toolbar');
 
+  const backgroundColor = toolbarBackgroundImage ? 'transparent' : toolbarColor;
+
   return (
     <SearchBarWrapper
       style={{
-        backgroundColor: toolbarBackgroundImage ? 'transparent' : toolbarColor,
+        backgroundColor,
       }}
     >
       <Navigation

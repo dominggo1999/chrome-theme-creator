@@ -7,12 +7,14 @@ import {
 import usePaletteStore from '../../store/usePaletteStore';
 import useImagesStore from '../../store/useImagesStore';
 import useOnClickOutside from '../../hooks/useClickOutside';
+import useHoverState from '../../store/useHoverStateStore';
 
-const Palette = ({ onChoose, a }) => {
+const Palette = ({ setActive, onChoose }) => {
   const colorPalette = usePaletteStore((state) => state.palette);
   const backgroundImage = useImagesStore(((state) => state.images.frame));
   const [disable, setDisable] = useState(true);
   const [open, setOpen] = useState(false);
+  const setHoverable = useHoverState((state) => state.setHoverable);
   const colorPickerRef = useRef();
 
   useEffect(() => {
@@ -21,15 +23,19 @@ const Palette = ({ onChoose, a }) => {
     }
   }, [backgroundImage]);
 
-  const closePalette = () => {
-    if(colorPalette.length) {
-      setOpen(false);
-    }
-  };
-
   const openPalette = () => {
     if(colorPalette.length) {
       setOpen(!open);
+      setHoverable(false);
+      setActive(true);
+    }
+  };
+
+  const closePalette = () => {
+    if(colorPalette.length) {
+      setOpen(false);
+      setHoverable(true);
+      setActive(false);
     }
   };
 

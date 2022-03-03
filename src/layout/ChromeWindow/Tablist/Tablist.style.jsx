@@ -73,7 +73,6 @@ export const TabOneCurveRight = styled.div`
     absolute
     w-[10px]
     h-[10px] 
-    bg-[red]
     left-full
     z-[11000]
     rounded-[8px]
@@ -98,7 +97,6 @@ export const TabTwoCurveRight = styled.div`
      absolute
       w-[10px]
       h-[10px] 
-      bg-[red]
       left-full
       rounded-[8px]
       bottom-0
