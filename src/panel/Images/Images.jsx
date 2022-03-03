@@ -6,6 +6,7 @@ import { ImagesWrapper } from './Images.style';
 import useImagesStore, { initialImages } from '../../store/useImagesStore';
 import PropertyEditor from '../../common/PropertyEditor/PropertyEditor';
 import useBackgroundNameStore from '../../store/useBackgroundNameStore';
+import NtpBackgroundSettings from '../../layout/NtpBackgroundSettings/NtpBackgroundSettings';
 
 const imageOnlyProperties = [];
 for (const key in initialImages) {
@@ -37,6 +38,7 @@ const Images = () => {
           })
         }
       </ImagesWrapper>
+      <NtpBackgroundSettings />
     </PanelWrapper>
   );
 };
