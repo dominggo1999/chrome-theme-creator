@@ -2,36 +2,46 @@ import React from 'react';
 import { SettingsWrapper, SettingsHeader, OptionsWrapper } from './NtpBackgroundSettings.style';
 import { PanelWrapper } from '../../common/PanelWrapper';
 import Select from '../../common/Select/Select';
+import useNtpSettingsStore from '../../store/useNtpSettingsStore';
 
-const defaultHorizontalAlignment = 'center';
-const defaultVerticalAlignment = 'bottom';
-const defaultRepeatMode = 'no-repeat';
-const defaultBackgroundSize = 'normal';
+const settingsSelector = (key) => {
+  return useNtpSettingsStore((state) => state[key]);
+};
 
-const horizontalAlignment = [
+const horizontalAlignmentOptions = [
   { value: 'left', label: 'Left' },
   { value: 'center', label: 'Center' },
   { value: 'right', label: 'Right' },
 ];
 
-const verticalAlignment = [
+const verticalAlignmentOptions = [
   { value: 'bottom', label: 'Bottom' },
   { value: 'top', label: 'Top' },
 ];
 
-const repeatMode = [
+const repeatModeOptions = [
   { value: 'no-repeat', label: 'No Repeat' },
   { value: 'repeat-x-y', label: 'Repeat XY' },
   { value: 'repeat-x', label: 'Repeat X' },
   { value: 'repeat-y', label: 'Repeat Y' },
 ];
 
-const backgroundSize = [
+const backgroundSizeOptions = [
   { value: 'normal', label: 'Normal' },
   { value: 'fill-screen', label: 'Fill Screen' },
 ];
 
 const NtpBackgroundSettings = () => {
+  const horizontalAlignment = settingsSelector('horizontalAlignment');
+  const verticalAlignment = settingsSelector('verticalAlignment');
+  const repeatMode = settingsSelector('repeatMode');
+  const backgroundSize = settingsSelector('backgroundSize');
+  const updateNtpSettings = settingsSelector('updateNtpSettings');
+
+  const handleChange = (key, value) => {
+    updateNtpSettings(key, value.value);
+  };
+
   return (
     <SettingsWrapper>
       <PanelWrapper>
@@ -41,19 +51,22 @@ const NtpBackgroundSettings = () => {
         <OptionsWrapper>
 
           <Select
-            value={defaultHorizontalAlignment}
-            options={horizontalAlignment}
+            value={horizontalAlignment}
+            options={horizontalAlignmentOptions}
             labelKey="label"
             valueKey="value"
             name="horizontal-alignment"
+            handleChange={(val) => handleChange('horizontalAlignment', val)}
           />
 
           <Select
-            value={defaultVerticalAlignment}
-            options={verticalAlignment}
+            value={verticalAlignment}
+            options={verticalAlignmentOptions}
             labelKey="label"
             valueKey="value"
             name="vertical-alignment"
+            handleChange={(val) => handleChange('verticalAlignment', val)}
+
           />
         </OptionsWrapper>
 
@@ -64,18 +77,20 @@ const NtpBackgroundSettings = () => {
         <OptionsWrapper>
 
           <Select
-            value={defaultRepeatMode}
-            options={repeatMode}
+            value={repeatMode}
+            options={repeatModeOptions}
             labelKey="label"
             valueKey="value"
             name="repeat-mode"
+            handleChange={(val) => handleChange('repeatMode', val)}
           />
           <Select
-            value={defaultBackgroundSize}
-            options={backgroundSize}
+            value={backgroundSize}
+            options={backgroundSizeOptions}
             labelKey="label"
             valueKey="value"
             name="background-size"
+            handleChange={(val) => handleChange('backgroundSize', val)}
           />
         </OptionsWrapper>
 
