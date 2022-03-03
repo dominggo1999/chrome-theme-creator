@@ -27,14 +27,9 @@ export const BackgroundImage = styled.div`
   ${tw`
     absolute
     w-full 
+    h-full
     bottom-0
   `}
-
-  img{
-    ${tw`
-      w-full
-    `}
-  }
 `;
 
 export const GoogleLogo = styled.div`

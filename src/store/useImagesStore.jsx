@@ -27,6 +27,7 @@ export const initialImages = {
   tab_background: {
     name: 'tab_background',
     color: '#DEE1E6',
+    image: '',
     fileName: '',
     width: 20,
     heigth: 120,

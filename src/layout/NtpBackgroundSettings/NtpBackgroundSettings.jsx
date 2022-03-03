@@ -3,6 +3,7 @@ import { SettingsWrapper, SettingsHeader, OptionsWrapper } from './NtpBackground
 import { PanelWrapper } from '../../common/PanelWrapper';
 import Select from '../../common/Select/Select';
 import useNtpSettingsStore from '../../store/useNtpSettingsStore';
+import useImagesStore from '../../store/useImagesStore';
 
 const settingsSelector = (key) => {
   return useNtpSettingsStore((state) => state[key]);
@@ -21,7 +22,7 @@ const verticalAlignmentOptions = [
 
 const repeatModeOptions = [
   { value: 'no-repeat', label: 'No Repeat' },
-  { value: 'repeat-x-y', label: 'Repeat XY' },
+  { value: 'repeat', label: 'Repeat XY' },
   { value: 'repeat-x', label: 'Repeat X' },
   { value: 'repeat-y', label: 'Repeat Y' },
 ];
@@ -37,6 +38,9 @@ const NtpBackgroundSettings = () => {
   const repeatMode = settingsSelector('repeatMode');
   const backgroundSize = settingsSelector('backgroundSize');
   const updateNtpSettings = settingsSelector('updateNtpSettings');
+  const ntpBackgroundName = useImagesStore((state) => state.images.ntp_background.fileName);
+
+  if(!ntpBackgroundName) return null;
 
   const handleChange = (key, value) => {
     updateNtpSettings(key, value.value);

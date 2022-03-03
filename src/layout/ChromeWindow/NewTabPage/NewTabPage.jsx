@@ -11,12 +11,24 @@ import {
   NtpItem,
   BackgroundImage,
 } from './NewTabPage.style';
+import useNtpSettingsStore from '../../../store/useNtpSettingsStore';
 import { useSelectorImagesColor, useSelectorColorOnly, useSelectorImageValue } from '../../../hooks/useSelectorColor';
+
+const settingsSelector = (key) => {
+  return useNtpSettingsStore((state) => state[key]);
+};
 
 const NewTabPage = () => {
   const ntpColor = useSelectorColorOnly('ntp_text');
   const ntpBackground = useSelectorImagesColor('ntp_background');
   const ntpBackgroundImage = useSelectorImageValue('ntp_background');
+  const horizontalAlignment = settingsSelector('horizontalAlignment');
+  const verticalAlignment = settingsSelector('verticalAlignment');
+  const repeatMode = settingsSelector('repeatMode');
+  const size = settingsSelector('backgroundSize');
+
+  const backgroundPosition = `${horizontalAlignment} ${verticalAlignment}`.trim();
+  const backgroundSize = size === 'fill-screen' ? 'cover' : 'auto';
 
   return (
     <PageWrapper
@@ -25,13 +37,16 @@ const NewTabPage = () => {
     >
       {
           ntpBackgroundImage && (
-          <BackgroundImage id="ntp_background">
+          <BackgroundImage
+            id="ntp_background"
+            style={{
+              backgroundImage: `url('${ntpBackgroundImage}')`,
+              backgroundRepeat: repeatMode,
+              backgroundPosition,
+              backgroundSize,
+            }}
+          />
 
-            <img
-              src={ntpBackgroundImage}
-              alt="ntp_background"
-            />
-          </BackgroundImage>
           )
       }
       <SearchBoxWrapper>

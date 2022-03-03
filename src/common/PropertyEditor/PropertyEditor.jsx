@@ -69,11 +69,6 @@ const PropertyEditor = ({
       hoverable={hoverable}
       active={active}
     >
-      {/* <PropertyEditorMask
-        style={{
-          pointerEvents: hoverable ? 'auto' : 'none',
-        }}
-      /> */}
       <Label>
         <p>
           {label}
