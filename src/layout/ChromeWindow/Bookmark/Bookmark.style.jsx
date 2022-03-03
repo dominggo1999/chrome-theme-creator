@@ -9,7 +9,7 @@ export const BookmarkWrapper = styled.div`
     items-center
     px-1
     relative
-    z-[999]
+    z-[9999]
   `}
 `;
 

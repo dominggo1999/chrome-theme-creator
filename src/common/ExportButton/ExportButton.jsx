@@ -92,30 +92,23 @@ const ExportButton = ({ children, ...rest }) => {
       if (Object.hasOwnProperty.call(images, key)) {
         const item = images[key];
 
-        // If there is no color but image is present
-        if(item.imageOnly && item.image) {
+        // Return image is exist
+        if(item.image) {
+          const imageDataURL = item.name === 'ntp_background'
+            ? await generateNtpBackground(item.image, item.fileName, setLoading)
+            : item.image;
+
           finalImages[key] = {
-            dataUrl: item.image,
+            dataUrl: imageDataURL,
             ext: getExtension(item.fileName),
           };
-        }
-
-        if(!item.imageOnly) {
-          // Return image is exist
-          if(item.image) {
-            const scaledDataUrl = await generateNtpBackground(item.image, item.fileName, setLoading);
-            finalImages[key] = {
-              dataUrl: scaledDataUrl,
-              ext: getExtension(item.fileName),
-            };
-          }else if(item.name !== 'ntp_background') {
-            // Generate image from color here if image not exist
-            const replacementImage = await generateImage(item.color, item.width, item.heigth);
-            finalImages[key] = {
-              dataUrl: replacementImage,
-              ext: 'png',
-            };
-          }
+        }else if(item.name !== 'ntp_background') {
+          // Generate image from color here if image not exist
+          const replacementImage = await generateImage(item.color, item.width, item.heigth);
+          finalImages[key] = {
+            dataUrl: replacementImage,
+            ext: 'png',
+          };
         }
       }
     }

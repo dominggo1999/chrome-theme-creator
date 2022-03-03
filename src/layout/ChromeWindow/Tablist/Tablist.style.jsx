@@ -6,7 +6,17 @@ export const TablistWrapper = styled.div`
     pt-2
     px-2
     relative
-    z-[999]
+  `}
+`;
+
+export const TablistWrapperMask = styled.div`
+  ${tw`
+    absolute
+    -left-1
+    -right-1
+    -top-1
+    bottom-0
+    z-[9999]
   `}
 `;
 
@@ -24,6 +34,13 @@ export const TabItem = styled.div`
     relative
   `}
 
+  span, svg{
+    ${tw`
+      relative
+      z-[999999]
+    `}
+  }
+
   svg{
     ${tw`
       text-xl
@@ -40,6 +57,8 @@ export const AddTabButton = styled.div`
     justify-center
     text-sm
     pb-[1px]
+    relative
+    z-[9999]
   `}
 
   svg{
@@ -56,13 +75,10 @@ export const TabOneCurveRight = styled.div`
     h-[10px] 
     bg-[red]
     left-full
-    z-50
+    z-[11000]
     rounded-[8px]
-    bg-[#E7EAED]
     bottom-0
   `}
-
-  box-shadow : -5px 5px 0 #34D399;
 `;
 
 export const TabOneCurveLeft = styled.div`
@@ -84,31 +100,44 @@ export const TabTwoCurveRight = styled.div`
       h-[10px] 
       bg-[red]
       left-full
-      z-50
       rounded-[8px]
-      bg-[#6366F1]
       bottom-0
+      z-[10]
     `}
-
-    box-shadow : -5px 5px 0 #E7EAED;
 `;
 
 export const ActiveTab = styled(TabItem)`
- 
+  ${tw`
+    relative
+    z-[11000]
+  `}
+`;
+
+export const ActiveTabMaskWrapper = styled.div`
+  ${tw`
+    absolute
+    z-[1100]
+    -left-3
+    -top-3
+    right-0
+    bottom-0
+  `}
 `;
 
 export const BackgroundTab = styled(TabItem)`
   ${tw`
-    bg-[#E7EAED]
+    z-[10000]
   `}
 `;
 
-export const DividerBlowTab = styled.div`
+export const BackgroundTabMaskWrapper = styled.div`
   ${tw`
-    w-full
-    h-[6px]
-    bg-green-400
-    relative
-    z-[1000]
+    absolute
+    z-[1100]
+    -top-3
+    w-screen
+    bottom-0
   `}
+
+  left : calc(-100% - 0.75rem);
 `;

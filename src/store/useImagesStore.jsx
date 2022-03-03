@@ -31,18 +31,6 @@ export const initialImages = {
     width: 20,
     heigth: 120,
   },
-  frame_overlay: {
-    name: 'frame_overlay',
-    color: '#ffffff',
-    fileName: '',
-    imageOnly: true,
-  },
-  ntp_attribution: {
-    name: 'ntp_attribution',
-    color: '#ffffff',
-    fileName: '',
-    imageOnly: true,
-  },
 };
 
 const updateImagesValue = (set, key, newValue) => {

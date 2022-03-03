@@ -14,6 +14,7 @@ export const StyledToolbar = styled.div`
     border
     border-black
     border-opacity-20
+    z-10
   `}
 `;
 

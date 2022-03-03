@@ -6,16 +6,17 @@ import { AiOutlineStar } from 'react-icons/ai';
 import {
   SearchBarWrapper, Navigation, Omnibox, OmniboxLeft,
 } from './SearchBar.style';
-import { useSelectorImagesColor, useSelectorColorOnly } from '../../../hooks/useSelectorColor';
+import { useSelectorImagesColor, useSelectorColorOnly, useSelectorImageValue } from '../../../hooks/useSelectorColor';
 
 const SearchBar = () => {
   const toolbarColor = useSelectorImagesColor('toolbar');
   const navigationColor = useSelectorColorOnly('navigation');
+  const toolbarBackgroundImage = useSelectorImageValue('toolbar');
 
   return (
     <SearchBarWrapper
       style={{
-        backgroundColor: toolbarColor,
+        backgroundColor: toolbarBackgroundImage ? 'transparent' : toolbarColor,
       }}
     >
       <Navigation

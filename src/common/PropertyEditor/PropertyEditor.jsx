@@ -70,6 +70,7 @@ const PropertyEditor = ({
             !colorsTab
             && (
             <ImagePicker
+              propertyName={propertyName}
               image={image}
               resetImage={resetImage}
               onImageChange={onImageChange}

@@ -28,11 +28,9 @@ const ColorExtractor = () => {
     const img = new Image();
     img.src = src;
 
-    const palette = colorThief.prototype.getPalette(img, 8);
+    const palette = colorThief.prototype.getPalette(img, 10);
     setPallete(palette);
   };
-
-  console.log(palette);
 
   return (
     <div>

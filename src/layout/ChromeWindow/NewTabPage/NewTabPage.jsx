@@ -19,18 +19,21 @@ const NewTabPage = () => {
   const ntpBackgroundImage = useSelectorImageValue('ntp_background');
 
   return (
-    <PageWrapper id="ntp_page">
+    <PageWrapper
+      style={{ backgroundColor: ntpBackground }}
+      id="ntp_page"
+    >
       {
-        ntpBackgroundImage && (
-        <BackgroundImage id="ntp_background">
+          ntpBackgroundImage && (
+          <BackgroundImage id="ntp_background">
 
-          <img
-            src={ntpBackgroundImage}
-            alt="ntp_background"
-          />
-        </BackgroundImage>
-        )
-    }
+            <img
+              src={ntpBackgroundImage}
+              alt="ntp_background"
+            />
+          </BackgroundImage>
+          )
+      }
       <SearchBoxWrapper>
         <GoogleLogo />
         <SearchBox>

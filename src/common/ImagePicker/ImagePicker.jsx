@@ -13,6 +13,7 @@ const ImagePicker = ({
   resetImage,
   onImageError,
   onImageChange,
+  propertyName,
 }) => {
   const [errorMessage, setErrorMessage] = useState();
 
@@ -31,6 +32,11 @@ const ImagePicker = ({
     setErrorMessage('');
   };
 
+  const allowedExtensions = ['jpg', 'jpeg', 'png'];
+  if(propertyName === 'ntp_background') {
+    allowedExtensions.push('gif');
+  }
+
   return (
     <>
       <ImagePickerWrapper>
@@ -44,7 +50,7 @@ const ImagePicker = ({
             }}
             onChange={handleUploadSuccess}
             onError={handleUploadFailed}
-            extensions={['jpg', 'jpeg', 'png', 'gif']}
+            extensions={allowedExtensions}
           >
             <OpenPickerButton>Choose Image</OpenPickerButton>
           </Picker>

@@ -3,7 +3,7 @@ import tw, { styled } from 'twin.macro';
 export const ButtonWrapper = styled.div`
   ${tw`
     absolute
-    z-[100]
+    z-[999999]
     right-0 
     top-0
     h-[30px]
