@@ -53,3 +53,16 @@ export const ColorOption = styled.div`
       transform : scale(1.2);
     }
 `;
+
+export const NoPalette = styled(ColorPicker)`
+  ${tw`
+    text-primary
+    text-sm
+    text-primary
+    right-0
+    left-auto
+    flex
+  `}
+
+  width : 150px;
+`;

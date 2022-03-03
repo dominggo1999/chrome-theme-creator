@@ -2,37 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IoIosColorPalette } from 'react-icons/io';
 import uuid from 'short-uuid';
 import {
-  PaletteWrapper, Icon, ColorPicker, ColorOption,
+  PaletteWrapper, Icon, ColorPicker, ColorOption, NoPalette,
 } from './Palette.style';
 import usePaletteStore from '../../store/usePaletteStore';
 import useImagesStore from '../../store/useImagesStore';
 import useOnClickOutside from '../../hooks/useClickOutside';
 
-const Palette = ({ setActive, onChoose }) => {
+const Palette = ({ onChoose }) => {
   const colorPalette = usePaletteStore((state) => state.palette);
-  const backgroundImage = useImagesStore(((state) => state.images.frame));
-  const [disable, setDisable] = useState(true);
   const [open, setOpen] = useState(false);
   const colorPickerRef = useRef();
 
-  useEffect(() => {
-    if(backgroundImage && colorPalette.length) {
-      setDisable(false);
-    }
-  }, [backgroundImage]);
-
   const openPalette = () => {
-    if(colorPalette.length) {
-      setOpen(!open);
-      setActive(true);
-    }
+    setOpen(!open);
   };
 
   const closePalette = () => {
-    if(colorPalette.length) {
-      setOpen(false);
-      setActive(false);
-    }
+    setOpen(false);
   };
 
   const handleOptionClick = (val) => {
@@ -45,11 +31,10 @@ const Palette = ({ setActive, onChoose }) => {
   return (
     <PaletteWrapper>
       <Icon
+        onClick={openPalette}
         style={{
           pointerEvents: open ? 'none' : 'auto',
         }}
-        disable={disable}
-        onClick={openPalette}
       >
         <IoIosColorPalette />
       </Icon>
@@ -72,6 +57,15 @@ const Palette = ({ setActive, onChoose }) => {
           </ColorPicker>
         )
       }
+
+      {
+         !colorPalette.length && open && (
+         <NoPalette ref={colorPickerRef}>
+           Generate colors first to get color palette
+         </NoPalette>
+         )
+      }
+
     </PaletteWrapper>
   );
 };

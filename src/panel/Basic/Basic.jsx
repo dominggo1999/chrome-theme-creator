@@ -21,6 +21,7 @@ import ExportButton from '../../common/ExportButton/ExportButton';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
+  const [colorGenerationLoading, setColorGenerationLoading] = useState(false);
 
   const changePallete = usePaletteStore((state) => state.changePallete);
 
@@ -55,12 +56,14 @@ const Basic = () => {
     }
   };
 
-  const extractColors = () => {
+  const extractColors = async () => {
+    setColorGenerationLoading(true);
+
     if(backgroundImage) {
       const img = new Image();
       img.src = backgroundImage;
-      img.onload = () => {
-        const palette = ColorThief.prototype.getPalette(img, 8);
+      img.onload = async () => {
+        const palette = await ColorThief.prototype.getPalette(img, 10);
         const hexColors = mapArrayToHex(palette);
         changePallete(hexColors);
 
@@ -80,6 +83,10 @@ const Basic = () => {
         updateColorValue('ntp_text', fontColorContrast(primaryColor));
         updateColorValue('button_background', primaryColor);
         updateColorValue('navigation', primaryColor);
+
+        if(primaryColor) {
+          setColorGenerationLoading(false);
+        }
       };
     }
   };
@@ -116,7 +123,7 @@ const Basic = () => {
           <OptionDescription>
             Generate a color palette for your theme that is generated from the background image
           </OptionDescription>
-          <Button onClick={extractColors}>Generate Color</Button>
+          <Button onClick={extractColors}>{colorGenerationLoading ? 'loading...' : 'Generate Colors'}</Button>
         </OptionItem>
         <OptionItem>
 
