@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useState } from 'react';
 import Palette from '../Palette/Palette';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import useColorsStore from '../../store/useColorsStore';

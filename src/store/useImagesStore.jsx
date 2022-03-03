@@ -52,8 +52,6 @@ const updateImagesColor = (set, key, newValue) => {
 };
 
 const updateFileName = (set, key, newValue) => {
-  console.log(key);
-
   return set(produce((draft) => {
     // Only update if there is a color
     draft.images[key].fileName = newValue;
