@@ -38,14 +38,15 @@ const PropertyEditor = ({
   const updateImageValue = useImagesStore((state) => state.updateImagesValue);
   const updateImageColor = useImagesStore((state) => state.updateImagesColor);
   const updateFileName = useImagesStore((state) => state.updateFileName);
-
+  const updateNtpBackgroundSize = useImagesStore((state) => state.updateNtpBackgroundSize);
   const onColorChange = (newColor) => {
     colorsTab ? updateColorValue(propertyName, newColor) : updateImageColor(propertyName, newColor);
   };
 
-  const onImageChange = (newImage, fileObject) => {
+  const onImageChange = (newImage, fileObject, width, height) => {
     const name = fileObject.name;
     if(propertyName === 'ntp_background') {
+      updateNtpBackgroundSize({ width, height });
       changeFileName(name);
     }
 

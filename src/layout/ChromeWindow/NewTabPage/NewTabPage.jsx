@@ -38,7 +38,6 @@ const NewTabPage = () => {
       {
           ntpBackgroundImage && (
           <BackgroundImage
-            id="ntp_background"
             style={{
               backgroundImage: `url('${ntpBackgroundImage}')`,
               backgroundRepeat: repeatMode,
@@ -46,7 +45,6 @@ const NewTabPage = () => {
               backgroundSize,
             }}
           />
-
           )
       }
       <SearchBoxWrapper>

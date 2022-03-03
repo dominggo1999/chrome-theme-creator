@@ -41,7 +41,7 @@ export const loadImage = (dataUrl, dims) => {
         );
       }
 
-      resolve(true);
+      resolve({ valid: true, width: img.naturalWidth, height: img.naturalHeight });
     };
 
     img.onerror = () => reject(new Error('There was an error uploading the image'));

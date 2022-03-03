@@ -17,9 +17,8 @@ const ImagePicker = ({
   ...rest
 }) => {
   const [errorMessage, setErrorMessage] = useState();
-
-  const handleUploadSuccess = (base64, fileObject) => {
-    onImageChange(base64, fileObject);
+  const handleUploadSuccess = (base64, fileObject, width, height) => {
+    onImageChange(base64, fileObject, width, height);
     setErrorMessage('');
   };
 

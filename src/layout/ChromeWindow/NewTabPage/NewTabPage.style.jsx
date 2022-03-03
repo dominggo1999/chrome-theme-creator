@@ -30,6 +30,13 @@ export const BackgroundImage = styled.div`
     h-full
     bottom-0
   `}
+
+  div{
+    ${tw`
+      w-full 
+      h-full
+    `}
+  }
 `;
 
 export const GoogleLogo = styled.div`

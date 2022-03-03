@@ -8,13 +8,15 @@ export const initialImages = {
     color: '#DEE1E6',
     fileName: '',
     width: 20,
-    heigth: 1920,
+    height: 1920,
   },
   ntp_background: {
     name: 'ntp_background',
     image: '',
     color: '#ffffff',
     fileName: '',
+    width: 0,
+    height: 0,
   },
   toolbar: {
     name: 'toolbar',
@@ -22,7 +24,7 @@ export const initialImages = {
     color: '#ffffff',
     fileName: '',
     width: 20,
-    heigth: 120,
+    height: 120,
   },
   tab_background: {
     name: 'tab_background',
@@ -30,7 +32,7 @@ export const initialImages = {
     image: '',
     fileName: '',
     width: 20,
-    heigth: 120,
+    height: 120,
   },
 };
 
@@ -50,9 +52,21 @@ const updateImagesColor = (set, key, newValue) => {
 };
 
 const updateFileName = (set, key, newValue) => {
+  console.log(key);
+
   return set(produce((draft) => {
     // Only update if there is a color
     draft.images[key].fileName = newValue;
+  }));
+};
+
+const updateNtpBackgroundSize = (set, newValue) => {
+  const { width, height } = newValue;
+
+  return set(produce((draft) => {
+    // Only update if there is a color
+    draft.images.ntp_background.width = width;
+    draft.images.ntp_background.height = height;
   }));
 };
 
@@ -62,6 +76,7 @@ const useImagesStore = create((set, get) => {
     updateImagesValue: (key, newValue) => updateImagesValue(set, key, newValue),
     updateImagesColor: (key, newValue) => updateImagesColor(set, key, newValue),
     updateFileName: (key, newValue) => updateFileName(set, key, newValue),
+    updateNtpBackgroundSize: (newValue) => updateNtpBackgroundSize(set, newValue),
     getImages: () => get().images,
   };
 });

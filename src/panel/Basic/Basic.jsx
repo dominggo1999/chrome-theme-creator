@@ -33,12 +33,14 @@ const Basic = () => {
 
   const updateColorValue = useColorsStore((state) => state.updateValue);
   const updateImageColor = useImagesStore((state) => state.updateImagesColor);
+  const updateNtpBackgroundSize = useImagesStore((state) => state.updateNtpBackgroundSize);
   const updateFileName = useImagesStore((state) => state.updateFileName);
 
-  const handleUploadSuccess = (base64, fileObject) => {
+  const handleUploadSuccess = (base64, fileObject, width, height) => {
     const name = fileObject.name;
     changeFileName(name);
     updateFileName('ntp_background', name);
+    updateNtpBackgroundSize({ width, height });
 
     setErrorMessage('');
     // Handle image here

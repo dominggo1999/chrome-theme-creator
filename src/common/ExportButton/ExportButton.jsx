@@ -37,15 +37,14 @@ const generateImage = (color, w, h) => {
 };
 
 let gif;
-const generateNtpBackground = async (dataUrl, fileName, backgroundSize) => {
+const generateNtpBackground = async (dataUrl, fileName, backgroundSize, backgroundImage) => {
   if(backgroundSize === 'normal') return dataUrl;
 
   const ext = getExtension(fileName).toLowerCase();
   const page = document.getElementById('frame');
-  const image = document.getElementById('ntp_background');
 
-  const w = image.clientWidth;
-  const h = image.clientHeight;
+  const w = backgroundImage.width;
+  const h = backgroundImage.height;
   const aspectRatio = w / h;
   const scaledWidth = page.clientWidth;
   const scaledHeight = scaledWidth / aspectRatio;
@@ -111,6 +110,7 @@ const ExportButton = ({ children, ...rest }) => {
 
     const colors = getColors();
     const images = getImages();
+
     const settings = getNtpSettings();
     const {
       horizontalAlignment,
@@ -130,8 +130,8 @@ const ExportButton = ({ children, ...rest }) => {
         // Return image is exist
         if(item.image) {
           const imageDataURL = item.name === 'ntp_background'
-            ? await generateNtpBackground(item.image, item.fileName, backgroundSize)
-            : await validateImage(item.image, item.fileName, item.width, item.heigth);
+            ? await generateNtpBackground(item.image, item.fileName, backgroundSize, images.ntp_background)
+            : await validateImage(item.image, item.fileName, item.width, item.height);
 
           const ext = getExtension(item.fileName);
 
@@ -141,7 +141,7 @@ const ExportButton = ({ children, ...rest }) => {
           };
         }else if(item.name !== 'ntp_background') {
           // Generate image from color here if image not exist
-          const replacementImage = await generateImage(item.color, item.width, item.heigth);
+          const replacementImage = await generateImage(item.color, item.width, item.height);
           finalImages[key] = {
             dataUrl: replacementImage,
             ext: 'png',
@@ -210,13 +210,11 @@ const ExportButton = ({ children, ...rest }) => {
         colors: finalColors,
         tints,
         properties: {
-          ntp_background_alignment: backgroundPosition,
-          ntp_background_repeat: repeatMode,
+          ntp_background_alignment: backgroundSize === 'normal' ? backgroundPosition : verticalAlignment,
+          ntp_background_repeat: repeatMode || 'no-repeat',
         },
       },
     };
-
-    console.log(backgroundPosition);
 
     zip.file('manifest.json', JSON.stringify(manifest));
 

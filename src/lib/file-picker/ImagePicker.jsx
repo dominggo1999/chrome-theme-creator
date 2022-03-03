@@ -13,10 +13,10 @@ const ImagePicker = ({
     try {
       const dataUrl = await loadFile(file);
 
-      await loadImage(dataUrl, dims);
+      const { width, height } = await loadImage(dataUrl, dims);
 
       // pass base64-encoded string and fileObject to onChange handler
-      onChange(dataUrl, file);
+      onChange(dataUrl, file, width, height);
     } catch (err) {
       // pass err message to onError handler
       onError(err.message);
