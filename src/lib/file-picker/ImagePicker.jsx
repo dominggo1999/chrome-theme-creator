@@ -12,6 +12,7 @@ const ImagePicker = ({
   const handleImage = async (file) => {
     try {
       const dataUrl = await loadFile(file);
+
       await loadImage(dataUrl, dims);
 
       // pass base64-encoded string and fileObject to onChange handler

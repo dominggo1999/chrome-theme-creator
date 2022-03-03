@@ -7,27 +7,21 @@ import {
   ColorInputContainer,
 } from './ColorPicker.style';
 import useOnClickOutside from '../../hooks/useClickOutside';
-import useHoverState from '../../store/useHoverStateStore';
 
 const ColorPicker = ({
-  setActive, onChange, color, ...rest
+  onChange, color, ...rest
 }) => {
   const [open, setOpen] = useState(false);
   const pickerRef = useRef();
   const wrapperRef = useRef();
   const [reposition, setReposition] = useState(false);
-  const setHoverable = useHoverState((state) => state.setHoverable);
 
   const openPicker = () => {
     setOpen(true);
-    setHoverable(false);
-    setActive(true);
   };
 
   const closePicker = () => {
     setOpen(false);
-    setHoverable(true);
-    setActive(false);
   };
 
   useEffect(() => {

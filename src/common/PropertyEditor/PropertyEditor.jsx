@@ -6,7 +6,6 @@ import useColorsStore from '../../store/useColorsStore';
 import useImagesStore from '../../store/useImagesStore';
 import {
   PropertyEditorWrapper,
-  PropertyEditorMask,
   Label,
   Controllers,
   ControllerLeft,

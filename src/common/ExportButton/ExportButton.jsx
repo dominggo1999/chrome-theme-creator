@@ -75,6 +75,28 @@ const generateNtpBackground = async (dataUrl, fileName) => {
   return newImageDataURL;
 };
 
+const validateImage = async (dataUrl, fileName, width, height) => {
+  const ext = getExtension(fileName).toLowerCase();
+
+  if(ext !== 'jpg') {
+    return dataUrl;
+  }
+
+  let img = new Image();
+  img.src = dataUrl;
+  let elem = document.createElement('canvas');
+  const ctx = elem.getContext('2d');
+  elem.width = img.naturalWidth;
+  elem.height = img.naturalHeight;
+  ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+  const newImageDataURL = ctx.canvas.toDataURL('image/png', 1.0);
+  elem = null;
+  img.src = null;
+  img = null;
+
+  return newImageDataURL;
+};
+
 const ExportButton = ({ children, ...rest }) => {
   const getColors = useColorsStore((state) => state.getColors);
   const getImages = useImagesStore((state) => state.getImages);
@@ -96,11 +118,13 @@ const ExportButton = ({ children, ...rest }) => {
         if(item.image) {
           const imageDataURL = item.name === 'ntp_background'
             ? await generateNtpBackground(item.image, item.fileName, setLoading)
-            : item.image;
+            : await validateImage(item.image, item.fileName, item.width, item.heigth);
+
+          const ext = getExtension(item.fileName);
 
           finalImages[key] = {
             dataUrl: imageDataURL,
-            ext: getExtension(item.fileName),
+            ext: ext === 'jpg' ? 'png' : ext,
           };
         }else if(item.name !== 'ntp_background') {
           // Generate image from color here if image not exist
