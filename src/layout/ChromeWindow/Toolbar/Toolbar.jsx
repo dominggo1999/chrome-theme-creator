@@ -6,7 +6,8 @@ import { useSelectorImagesColor } from '../../../hooks/useSelectorColor';
 export const StyledToolbar = styled.div`
   ${tw`
     absolute
-    bottom-0
+    left-1
+    bottom-1
     px-1
     w-1/5
     rounded-tr-sm
