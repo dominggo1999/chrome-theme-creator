@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 // https://stackoverflow.com/questions/38787951/disabling-data-url-jpg-cache
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import hexToHsl from 'hex-to-hsl';
 import { saveAs } from 'file-saver';
 import domToImage from '@yzfe/dom-to-image';
@@ -11,6 +11,8 @@ import useColorsStore, { initialColors } from '../../store/useColorsStore';
 import useImagesStore, { initialImages } from '../../store/useImagesStore';
 import { hexToRgbArray } from '../../util/colors';
 
+// eslint-disable-next-line import/no-unresolved
+import GenerateGIF from '../../lib/extract-frames/wasm-gif-encoder?worker';
 import { extract } from '../../lib/extract-frames/extract-frames';
 import useNtpSettingsStore from '../../store/useNtpSettingsStore';
 
@@ -37,7 +39,7 @@ const generateImage = (color, w, h) => {
 };
 
 let gif;
-const generateNtpBackground = async (dataUrl, fileName, backgroundSize, backgroundImage) => {
+const generateNtpBackground = async (dataUrl, fileName, backgroundSize, backgroundImage, worker) => {
   if(backgroundSize === 'normal') return dataUrl;
 
   const ext = getExtension(fileName).toLowerCase();
@@ -56,7 +58,7 @@ const generateNtpBackground = async (dataUrl, fileName, backgroundSize, backgrou
       height: h,
       targetWidth: scaledWidth,
       targetHeight: scaledHeight,
-    });
+    }, worker);
 
     return gif;
   }
@@ -103,9 +105,13 @@ const ExportButton = ({ children, ...rest }) => {
   const getColors = useColorsStore((state) => state.getColors);
   const getImages = useImagesStore((state) => state.getImages);
   const getNtpSettings = useNtpSettingsStore((state) => state.getNtpSettings);
+  const worker = useRef(null);
   const [loading, setLoading] = useState(false);
+  const isSubscribed = useRef(false);
 
   const exportAndDownload = async () => {
+    worker.current = new GenerateGIF();
+
     setLoading(true);
 
     const colors = getColors();
@@ -123,31 +129,35 @@ const ExportButton = ({ children, ...rest }) => {
 
     const finalImages = {};
 
-    for (const key in images) {
-      if (Object.hasOwnProperty.call(images, key)) {
-        const item = images[key];
+    try {
+      for (const key in images) {
+        if (Object.hasOwnProperty.call(images, key)) {
+          const item = images[key];
 
-        // Return image is exist
-        if(item.image) {
-          const imageDataURL = item.name === 'ntp_background'
-            ? await generateNtpBackground(item.image, item.fileName, backgroundSize, images.ntp_background)
-            : await validateImage(item.image, item.fileName, item.width, item.height);
+          // Return image is exist
+          if(item.image) {
+            const imageDataURL = item.name === 'ntp_background'
+              ? await generateNtpBackground(item.image, item.fileName, backgroundSize, images.ntp_background, worker.current)
+              : await validateImage(item.image, item.fileName, item.width, item.height);
 
-          const ext = getExtension(item.fileName);
+            const ext = getExtension(item.fileName);
 
-          finalImages[key] = {
-            dataUrl: imageDataURL,
-            ext: ext === 'jpg' ? 'png' : ext,
-          };
-        }else if(item.name !== 'ntp_background') {
-          // Generate image from color here if image not exist
-          const replacementImage = await generateImage(item.color, item.width, item.height);
-          finalImages[key] = {
-            dataUrl: replacementImage,
-            ext: 'png',
-          };
+            finalImages[key] = {
+              dataUrl: imageDataURL,
+              ext: ext === 'jpg' ? 'png' : ext,
+            };
+          }else if(item.name !== 'ntp_background') {
+            // Generate image from color here if image not exist
+            const replacementImage = await generateImage(item.color, item.width, item.height);
+            finalImages[key] = {
+              dataUrl: replacementImage,
+              ext: 'png',
+            };
+          }
         }
       }
+    } catch (error) {
+      console.log(error);
     }
 
     let finalColors = {};
@@ -226,6 +236,15 @@ const ExportButton = ({ children, ...rest }) => {
       saveAs(content, 'my-theme.zip');
     });
   };
+
+  useEffect(() => {
+    isSubscribed.current = true;
+
+    return () => {
+      isSubscribed.current = false;
+      worker?.current?.terminate();
+    };
+  }, []);
 
   return (
     <Button

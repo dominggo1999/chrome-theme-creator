@@ -1,8 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
-import GenerateGIF from './wasm-gif-encoder?worker';
-// We need to import the module first
-
-export const extract = async (opts) => {
+export const extract = async (opts, worker) => {
   return new Promise((resolve, reject) => {
     const {
       input,
@@ -13,7 +9,6 @@ export const extract = async (opts) => {
     } = opts;
 
     const offscreenCanvas = new OffscreenCanvas(width, height);
-    const worker = new GenerateGIF();
 
     worker.postMessage({
       message: 'render-gif',
