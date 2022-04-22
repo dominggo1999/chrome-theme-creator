@@ -8,3 +8,24 @@ export const AppContainer = styled.div`
     w-full
   `}
 `;
+
+export const CapsuleWrapper = styled.div`
+  ${tw`
+    w-full 
+    h-full 
+    bg-primary
+    absolute 
+    top-0  
+    left-0 
+  `}
+  z-index: -1;
+`;
+
+export const Capsule = styled.div`
+  ${tw`
+    w-full 
+    h-full 
+    relative 
+    overflow-hidden
+  `}
+`;

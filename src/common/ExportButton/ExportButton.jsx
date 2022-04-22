@@ -29,7 +29,7 @@ const generateImage = (color, w, h) => {
   box.style.height = `${h}px`;
   box.style.backgroundColor = color;
   box.style.zIndex = -1;
-  document.body.appendChild(box);
+  document.querySelector('#capsule').appendChild(box);
 
   return domToImage.toPng(box)
     .then((dataUrl) => {

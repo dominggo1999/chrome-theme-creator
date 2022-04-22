@@ -7,7 +7,7 @@ const CustomStyles = createGlobalStyle`
     ${tw`
       antialiased
       bg-primary  
-      overflow-hidden
+      relative
     `}
   }
 `;
