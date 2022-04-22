@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { PreviewWrapper, ChromePreviewWrapper } from './Preview.style';
 import Frame from '../ChromeWindow/Frame/Frame';
 
@@ -8,31 +9,30 @@ const Preview = () => {
   const chromeRef = useRef();
   const [width, setWidth] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getScale = () => {
-      const w = window.screen.availWidth;
+      const h = isMobile ? 900 : window.screen.availHeight;
+      const w = isMobile ? 1600 : window.screen.availWidth;
+      const newAspectRatio = w / h;
       const { width: previewWidth } = (chromeRef.current.getBoundingClientRect());
 
-      setScale(previewWidth / w);
-    };
+      chromeRef.current.style.height = `${previewWidth / aspectRatio}px`;
 
-    const getAspectRatio = () => {
-      const h = window.screen.availHeight;
-      const w = window.screen.availWidth;
       setWidth(w);
-
-      setAspectRatio(w / h);
+      setAspectRatio(newAspectRatio);
+      setScale(previewWidth / w);
     };
 
     window.addEventListener('resize', getScale);
 
-    getAspectRatio();
     getScale();
 
     return () => {
       window.removeEventListener('resize', getScale);
     };
   }, []);
+
+  console.log(width);
 
   if(!scale) return null;
 

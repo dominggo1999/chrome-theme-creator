@@ -6,7 +6,7 @@ const CustomStyles = createGlobalStyle`
   body {
     ${tw`
       antialiased
-      bg-primary
+      bg-primary 
     `}
   }
 `;

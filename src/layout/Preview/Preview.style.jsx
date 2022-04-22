@@ -5,9 +5,9 @@ export const PreviewWrapper = styled.div`
     px-2
     py-2
     h-full
+    w-[calc(100% - 8px)]
+    md:w-[calc(100% - 370px - 24px)]
   `}
-
-  width : calc(100% - 400px - 8px);
 `;
 
 export const ChromePreviewWrapper = styled.div`
