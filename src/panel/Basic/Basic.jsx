@@ -125,7 +125,11 @@ const Basic = () => {
           <OptionDescription>
             Generate a color palette for your theme that is generated from the background image
           </OptionDescription>
-          <Button onClick={extractColors}>{colorGenerationLoading ? 'loading...' : 'Generate Colors'}</Button>
+          <Button
+            disabled={!backgroundImage}
+            onClick={extractColors}
+          >{colorGenerationLoading ? 'loading...' : 'Generate Colors'}
+          </Button>
         </OptionItem>
         <OptionItem>
 

@@ -9,5 +9,12 @@ export const StyledButton = styled.button`
     py-2
     font-semibold
     text-primary
+    hover:bg-accent-lighter
   `}
+
+  &:disabled{
+    ${tw`
+      cursor-not-allowed
+    `}
+  }
 `;

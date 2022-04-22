@@ -227,11 +227,6 @@ const ExportButton = ({ children, ...rest }) => {
     });
   };
 
-  useEffect(() => {
-
-    // loadGifFrameList('https://c.tenor.com/6MsukwHKJ58AAAAM/ara-anime.gif');
-  }, []);
-
   return (
     <Button
       disabled={loading}
