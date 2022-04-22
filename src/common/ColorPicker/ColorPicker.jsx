@@ -14,7 +14,7 @@ const ColorPicker = ({
   const [open, setOpen] = useState(false);
   const pickerRef = useRef();
   const wrapperRef = useRef();
-  const [reposition, setReposition] = useState(false);
+  const [repositionY, setRepositionY] = useState(false);
 
   const openPicker = () => {
     setOpen(true);
@@ -40,11 +40,11 @@ const ColorPicker = ({
     const viewportHeight = window.innerHeight;
 
     if(bottomIndicator > viewportHeight) {
-      setReposition(true);
+      setRepositionY(true);
     }
   }, []);
 
-  useOnClickOutside(pickerRef, closePicker);
+  useOnClickOutside(pickerRef, closePicker, open, false);
 
   return (
     <ColorPickerWrapper ref={wrapperRef}>
@@ -60,7 +60,7 @@ const ColorPicker = ({
         open
         && (
         <PickerWrapper
-          reposition={reposition}
+          repositionY={repositionY}
           ref={pickerRef}
         >
           <HexColorPicker

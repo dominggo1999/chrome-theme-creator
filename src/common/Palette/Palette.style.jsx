@@ -28,8 +28,9 @@ export const ColorPicker = styled.div`
   ${tw`
     z-[90]
     absolute
-    left-0 
-    top-full
+    right-0
+    md:left-0 
+    top-[calc(100% + 0.5rem)]
     bg-white
     ml-4
     rounded-sm

@@ -18,8 +18,6 @@ const Preview = () => {
 
       chromeRef.current.style.height = `${previewWidth / newAspectRatio}px`;
 
-      console.log(previewWidth, previewWidth / newAspectRatio);
-
       setWidth(w);
       setAspectRatio(newAspectRatio);
       setScale(previewWidth / w);
@@ -35,8 +33,6 @@ const Preview = () => {
   }, []);
 
   if(!scale) return null;
-
-  console.log(isMobile);
 
   return (
     <PreviewWrapper ref={chromeRef}>

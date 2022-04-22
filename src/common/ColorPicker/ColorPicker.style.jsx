@@ -22,11 +22,12 @@ export const PickerWrapper = styled.div`
   ${tw`
     mt-1
     absolute 
-    left-0 
-    z-[90]
+    md:left-0 
+    z-[99999] 
+    right-0
   `}
 
-  ${({ reposition }) => (reposition ? tw`bottom-full` : tw`top-full`)}
+  ${({ repositionY }) => (repositionY ? tw`md:bottom-full` : tw`md:top-full`)}
 
   .react-colorful__last-control{
     ${tw`

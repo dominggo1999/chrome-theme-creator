@@ -29,7 +29,7 @@ const Palette = ({ setActive, setHoverable, onChoose }) => {
   };
 
   // Close color picker on click outside
-  useOnClickOutside(colorPickerRef, closePalette);
+  useOnClickOutside(colorPickerRef, closePalette, open, false);
 
   return (
     <PaletteWrapper>
