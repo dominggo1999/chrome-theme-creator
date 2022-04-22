@@ -11,12 +11,14 @@ const Preview = () => {
 
   useLayoutEffect(() => {
     const getScale = () => {
-      const h = isMobile ? 900 : window.screen.availHeight;
       const w = isMobile ? 1600 : window.screen.availWidth;
+      const h = isMobile ? 900 : window.screen.availHeight;
       const newAspectRatio = w / h;
       const { width: previewWidth } = (chromeRef.current.getBoundingClientRect());
 
-      chromeRef.current.style.height = `${previewWidth / aspectRatio}px`;
+      chromeRef.current.style.height = `${previewWidth / newAspectRatio}px`;
+
+      console.log(previewWidth, previewWidth / newAspectRatio);
 
       setWidth(w);
       setAspectRatio(newAspectRatio);
@@ -32,9 +34,9 @@ const Preview = () => {
     };
   }, []);
 
-  console.log(width);
-
   if(!scale) return null;
+
+  console.log(isMobile);
 
   return (
     <PreviewWrapper ref={chromeRef}>
