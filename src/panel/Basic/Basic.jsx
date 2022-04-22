@@ -136,7 +136,7 @@ const Basic = () => {
 
           <OptionTitle>3. Export Theme</OptionTitle>
           <ExportMessage />
-          <ExportButton>Export and Download</ExportButton>
+          <ExportButton colorGenerationLoading={colorGenerationLoading}>Export and Download</ExportButton>
         </OptionItem>
       </Options>
     </PanelWrapper>

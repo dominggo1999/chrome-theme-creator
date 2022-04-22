@@ -101,7 +101,7 @@ const validateImage = async (dataUrl, fileName) => {
   return newImageDataURL;
 };
 
-const ExportButton = ({ children, ...rest }) => {
+const ExportButton = ({ children, colorGenerationLoading, ...rest }) => {
   const getColors = useColorsStore((state) => state.getColors);
   const getImages = useImagesStore((state) => state.getImages);
   const getNtpSettings = useNtpSettingsStore((state) => state.getNtpSettings);
@@ -248,7 +248,7 @@ const ExportButton = ({ children, ...rest }) => {
 
   return (
     <Button
-      disabled={loading}
+      disabled={loading || colorGenerationLoading}
       onClick={!loading ? exportAndDownload : null}
       {...rest}
     >
