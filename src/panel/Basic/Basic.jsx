@@ -18,6 +18,7 @@ import useBackgroundNameStore from '../../store/useBackgroundNameStore';
 import { mapArrayToHex } from '../../util/colors';
 import useColorsStore from '../../store/useColorsStore';
 import ExportButton from '../../common/ExportButton/ExportButton';
+import ExportMessage from '../../common/ExportMessage/ExportMessage';
 
 const Basic = () => {
   const [errorMessage, setErrorMessage] = useState();
@@ -134,9 +135,7 @@ const Basic = () => {
         <OptionItem>
 
           <OptionTitle>3. Export Theme</OptionTitle>
-          <OptionDescription>
-            Export and download your theme as a <span>.zip </span>  file. Check out how to install <a href="#">here</a>
-          </OptionDescription>
+          <ExportMessage />
           <ExportButton>Export and Download</ExportButton>
         </OptionItem>
       </Options>
