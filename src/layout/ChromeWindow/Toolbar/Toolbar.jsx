@@ -9,13 +9,15 @@ export const StyledToolbar = styled.div`
     left-1
     bottom-1
     px-1
-    w-1/5
+    w-1/3
+    md:w-1/5
     rounded-tr-sm
     text-sm
     border
     border-black
     border-opacity-20
-    z-10
+    z-10 
+    truncate
   `}
 `;
 

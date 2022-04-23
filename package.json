@@ -29,7 +29,6 @@
     "rgb-hex": "^4.0.0",
     "short-uuid": "^4.2.0",
     "styled-components": "^5.3.1",
-    "use-file-picker": "^1.4.1",
     "zustand": "^3.7.0"
   },
   "devDependencies": {
