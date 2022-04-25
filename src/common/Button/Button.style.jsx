@@ -8,7 +8,6 @@ export const StyledButton = styled.button`
     w-full
     py-2
     font-semibold
-    text-primary
     hover:bg-accent-lighter
   `}
 

@@ -8,6 +8,7 @@ import {
 } from './App.style';
 import Preview from './layout/Preview/Preview';
 import NotFound from './pages/NotFound/NotFound';
+import Documentation from './pages/Documentation/Documentation';
 
 const App = () => {
   return (
@@ -23,6 +24,11 @@ const App = () => {
             </CapsuleWrapper>
           </AppContainer>
         )}
+      />
+
+      <Route
+        element={<Documentation />}
+        path="documentation"
       />
 
       <Route
