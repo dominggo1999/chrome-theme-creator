@@ -5,6 +5,9 @@ import mdx from '@mdx-js/rollup';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    include: ['react/jsx-runtime'],
+  },
   plugins: [
     mdx({}),
     react({

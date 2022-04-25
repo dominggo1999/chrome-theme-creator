@@ -7,9 +7,11 @@ export const Header = styled.header`
     text-[#d6eeee] 
     h-16 
     fixed 
-    w-full
     top-0 
-    left-0
+    left-0   
+    right-0
+    bg-primary
+    z-[99990]
   `}
 `;
 
