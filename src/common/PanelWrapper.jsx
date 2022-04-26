@@ -6,7 +6,7 @@ export const PanelWrapper = styled.div`
     px-4
     flex
     flex-col
-    bg-primary
+    bg-primary 
   `}
 
   ${({ noPadding }) => noPadding && tw`px-0`}
