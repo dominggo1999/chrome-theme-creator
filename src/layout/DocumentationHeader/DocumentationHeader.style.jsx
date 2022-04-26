@@ -26,14 +26,16 @@ export const HeaderWrapper = styled(Wrapper)`
 export const Brand = styled.div`
   ${tw`
     text-accent 
-    text-2xl 
+    text-xl 
+    md:text-2xl 
     font-semibold 
     pointer-events-none
   `}
 `;
 
 export const PreviousButton = styled(Link)`
-  ${tw`
+  ${tw` 
+    text-sm
     text-primary
     bg-accent
     rounded-lg

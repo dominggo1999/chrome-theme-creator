@@ -17,7 +17,7 @@ const DocumentationHeader = ({ sidebarOpen, openSidebar }) => {
           }
         </MenuIcon>
         <Brand>
-          Chrome Themer
+          Chromio
         </Brand>
         <PreviousButton to="/">
           <ArrowWrapper>
