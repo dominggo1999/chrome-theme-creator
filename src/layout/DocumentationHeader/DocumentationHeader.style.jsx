@@ -60,8 +60,8 @@ export const MenuIcon = styled.button`
   ${tw`
     text-2xl 
     mr-2
-    mt-1 
     block
     md:hidden 
+    mt-[1px]
   `}
 `;
