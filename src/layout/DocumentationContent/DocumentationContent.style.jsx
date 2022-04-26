@@ -14,7 +14,7 @@ export const ContentWrapper = styled.div`
     xl:pl-64
     bottom-0 
     max-w-[64rem]
-    pr-4
+    md:pr-4
     w-full
     mx-auto  
     flex 

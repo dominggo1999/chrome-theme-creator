@@ -6,7 +6,7 @@ export const VideoWrapper = styled.div`
     relative 
     mt-4 
     mb-6 
-    pt-[56.25%]
+    pt-[56.25%] 
   `}
 
   .player {

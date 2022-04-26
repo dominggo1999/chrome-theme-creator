@@ -10,7 +10,8 @@ export const SidebarWrapper = styled.div`
     h-screen 
     overflow-y-auto    
     fixed  
-    bg-primary 
+    bg-primary  
+    z-[99999]
   `}
 
   ${({ open }) => open && tw`translate-x-0 `}
