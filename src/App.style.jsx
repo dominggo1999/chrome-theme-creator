@@ -5,7 +5,8 @@ export const AppContainer = styled.div`
     flex 
     flex-col-reverse
     md:flex-row
-    w-full
+    w-full 
+    bg-primary
   `}
 `;
 
