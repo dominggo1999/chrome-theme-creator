@@ -62,6 +62,5 @@ export const MenuIcon = styled.button`
     mr-2
     block
     md:hidden 
-    mt-[1px]
   `}
 `;
