@@ -20,7 +20,6 @@ export const HeaderWrapper = styled(Wrapper)`
     h-full 
     items-center
     flex 
-    justify-between
   `}
 `;
 
@@ -44,12 +43,23 @@ export const PreviousButton = styled(Link)`
     flex 
     items-center 
     gap-x-1
-    font-semibold
+    font-semibold 
+    ml-auto
   `}
 `;
 
 export const ArrowWrapper = styled.span`
   ${tw`
     text-lg
+  `}
+`;
+
+export const MenuIcon = styled.button`
+  ${tw`
+    text-2xl 
+    mr-2
+    mt-1 
+    block
+    md:hidden 
   `}
 `;

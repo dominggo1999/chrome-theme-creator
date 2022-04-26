@@ -1,6 +1,9 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useLayoutEffect, useRef, useState,
+} from 'react';
 import { SidebarWrapper, Navigation } from './DocumentationSidebar.style';
 import { getAnchor } from '../../util/getAnchor';
+import useOnClickOutside from '../../hooks/useClickOutside';
 
 const Link = ({
   children, href, active, index,
@@ -36,9 +39,10 @@ const getActiveElement = (rects) => {
   return closest.index;
 };
 
-const DocumentationSidebar = () => {
+const DocumentationSidebar = ({ sidebarOpen, closeSidebar }) => {
   const navigationRef = useRef();
   const [active, setActive] = useState(0);
+  const sidebarRef = useRef();
 
   useLayoutEffect(() => {
     const handleScroll = () => {
@@ -58,8 +62,13 @@ const DocumentationSidebar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useOnClickOutside(sidebarRef, closeSidebar, sidebarOpen, false);
+
   return (
-    <SidebarWrapper>
+    <SidebarWrapper
+      ref={sidebarRef}
+      open={sidebarOpen}
+    >
       <Navigation ref={navigationRef}>
         <ul>
           <li>

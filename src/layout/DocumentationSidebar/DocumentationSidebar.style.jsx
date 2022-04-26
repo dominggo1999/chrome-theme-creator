@@ -12,6 +12,8 @@ export const SidebarWrapper = styled.div`
     fixed  
     bg-primary 
   `}
+
+  ${({ open }) => open && tw`translate-x-0 `}
   transition: transform .25s ease;
 `;
 
