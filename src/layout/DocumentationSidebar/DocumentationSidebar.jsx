@@ -1,7 +1,7 @@
 import React, {
   useLayoutEffect, useRef, useState,
 } from 'react';
-import { SidebarWrapper, Navigation } from './DocumentationSidebar.style';
+import { SidebarWrapper, Navigation, Copyright } from './DocumentationSidebar.style';
 import { getAnchor } from '../../util/getAnchor';
 import useOnClickOutside from '../../hooks/useClickOutside';
 
@@ -107,6 +107,15 @@ const DocumentationSidebar = ({ sidebarOpen, closeSidebar }) => {
               Voluptate tempora
             </Link>
           </li>
+          <Copyright>Developed by {' '}
+            <a
+              target="_blank"
+              href="https://github.com/dominggo1999"
+              rel="noopener noreferrer"
+            >
+              dominggo1999
+            </a>
+          </Copyright>
         </ul>
       </Navigation>
     </SidebarWrapper>
