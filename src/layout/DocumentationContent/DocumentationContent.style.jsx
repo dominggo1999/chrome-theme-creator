@@ -36,7 +36,7 @@ export const ContentWrapper = styled.div`
 
   p{
     ${tw`
-      mb-1
+      mb-5
     `}
   }
 
@@ -50,7 +50,10 @@ export const ContentWrapper = styled.div`
   ol{
     ${tw`
       list-decimal 
-      mb-2
+      mb-5 
+      flex
+      flex-col 
+      gap-y-2
     `}
 
     li{
