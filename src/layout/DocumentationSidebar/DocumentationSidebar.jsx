@@ -81,7 +81,7 @@ const DocumentationSidebar = ({ sidebarOpen, closeSidebar }) => {
         <ul>
           {titles?.length > 0 && titles.map((i, index) => {
             return (
-              <li>
+              <li key={i}>
                 <Link
                   active={active}
                   href={`#${getAnchor(i)}`}
