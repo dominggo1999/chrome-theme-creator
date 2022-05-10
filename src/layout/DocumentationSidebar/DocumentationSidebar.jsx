@@ -42,7 +42,15 @@ const getActiveElement = (rects) => {
 const DocumentationSidebar = ({ sidebarOpen, closeSidebar }) => {
   const navigationRef = useRef();
   const [active, setActive] = useState(0);
+  const [titles, setTitles] = useState([]);
   const sidebarRef = useRef();
+
+  // Get all h1 in documentation
+  useLayoutEffect(() => {
+    const headingOneList = document.querySelectorAll('#documentation-content h1');
+    const titles = Array.from(headingOneList).map((i) => i.textContent.replace('#', ''));
+    setTitles(titles);
+  }, []);
 
   useLayoutEffect(() => {
     const handleScroll = () => {
@@ -71,52 +79,21 @@ const DocumentationSidebar = ({ sidebarOpen, closeSidebar }) => {
     >
       <Navigation ref={navigationRef}>
         <ul>
-          <li>
-            <Link
-              active={active}
-              href={`#${getAnchor('Lorem ipsum dolor sit amet consectetur')}`}
-              index={0}
-            >
-              Lorem ipsum dolor sit amet consectetur
-            </Link>
-          </li>
-          <li>
-            <Link
-              active={active}
-              href={`#${getAnchor('Dure repudiandae perspiciatis reprehenderit')}`}
-              index={1}
-            >
-              Dure repudiandae perspiciatis reprehenderit
-            </Link>
-          </li>
-          <li>
-            <Link
-              active={active}
-              href={`#${getAnchor('Quisquam nemo reprehenderit')}`}
-              index={2}
-            >
-              Quisquam nemo reprehenderit
-            </Link>
-          </li>
-          <li>
-            <Link
-              active={active}
-              href={`#${getAnchor('Voluptate tempora')}`}
-              index={3}
-            >
-              Voluptate tempora
-            </Link>
-          </li>
-          <Copyright>Developed by {' '}
-            <a
-              target="_blank"
-              href="https://github.com/dominggo1999"
-              rel="noopener noreferrer"
-            >
-              dominggo1999
-            </a>
-          </Copyright>
+          {titles?.length > 0 && titles.map((i, index) => {
+            return (
+              <li>
+                <Link
+                  active={active}
+                  href={`#${getAnchor(i)}`}
+                  index={index}
+                >
+                  {i}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
+
       </Navigation>
     </SidebarWrapper>
   );

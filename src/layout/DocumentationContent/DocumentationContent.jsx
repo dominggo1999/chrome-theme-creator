@@ -5,7 +5,7 @@ import { H1, Link } from '../../common/MarkdownMapping';
 
 const DocumentationContent = () => {
   return (
-    <ContentWrapper>
+    <ContentWrapper id="documentation-content">
       <ScrollPaddingTop />
       <Documentation components={{ h1: H1, a: Link }} />
     </ContentWrapper>
