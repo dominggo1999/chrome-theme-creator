@@ -19,3 +19,15 @@ export const H1 = ({ children }) => {
     </h1>
   );
 };
+
+export const Link = ({ href, children }) => {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  );
+};

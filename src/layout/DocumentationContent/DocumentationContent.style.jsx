@@ -36,7 +36,7 @@ export const ContentWrapper = styled.div`
 
   p{
     ${tw`
-      mb-4
+      mb-1
     `}
   }
 
@@ -45,5 +45,18 @@ export const ContentWrapper = styled.div`
       text-accent
       font-semibold
     `}
+  }
+
+  ol{
+    ${tw`
+      list-decimal 
+      mb-2
+    `}
+
+    li{
+      ${tw`
+        ml-4
+      `}
+    }
   }
 `;
